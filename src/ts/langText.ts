@@ -846,6 +846,14 @@ Zip 파일이 원본 파일입니다.`,
     `크롤링이 완료되었으나, 필터 조건에 맞는 작품을 찾을 수 없습니다.<br>"크롤" 관련 설정을 확인하고 로그에 표시된 정보를 확인하세요。`,
     `Кроулинг завершен, но работы, соответствующие условиям фильтрации, не найдены。<br>Проверьте настройки, связанные с "crawl", и просмотрите информацию, отображаемую в журнале。`,
   ],
+  _抓取结果为零并且启用了自动合并系列小说时的提示: [
+    `另外，当你启用了“自动合并系列小说”，并且抓取的作品全部属于系列小说时，没有单独的抓取结果可能是正常的。`,
+    `另外，當你啟用了「自動合併系列小說」，並且抓取的作品全部屬於系列小說時，沒有單獨的抓取結果可能是正常的。`,
+    `Additionally, when you enable "Automatically merge series novels" and all crawled works belong to series novels, having no separate crawl results may be normal.`,
+    `また、「自動的にシリーズ小説をマージ」を有効にし、クロールした作品がすべてシリーズ小説に属する場合、個別のクロール結果がないのは正常な可能性があります。`,
+    `또한, "시리즈 소설 자동 병합"을 활성화하고 크롤링한 작품이 모두 시리즈 소설에 속할 때, 개별 크롤링 결과가 없을 수 있습니다. 이는 정상입니다.`,
+    `Кроме того, когда вы включаете «Автоматическое объединение серий романов» и все краулленные работы принадлежат сериям романов, отсутствие отдельных результатов краулинга может быть нормальным.`,
+  ],
   _当前任务尚未完成: [
     '当前任务尚未完成',
     '目前工作尚未完成',
@@ -886,7 +894,23 @@ Zip 파일이 원본 파일입니다.`,
     '{}에 접근 권한이 없습니다, 이 작업을 건너뜁니다.',
     'Нет доступа {}, пропуск.',
   ],
-  _作品页状态码0: [
+  _你的账号可能已经被限制无法添加收藏: [
+    `你的账号可能已经被限制，无法添加收藏`,
+    `你的帳號可能已經被限制，無法添加收藏`,
+    `Your account may have been restricted and cannot add bookmarks`,
+    `アカウントが制限されている可能性があり、ブックマークを追加できません`,
+    `계정이 제한되어 북마크를 추가할 수 없습니다`,
+    `Ваш аккаунт, возможно, ограничен и не может добавлять закладки`,
+  ],
+  _状态码: [
+    `状态码`,
+    `狀態碼`,
+    `Status code`,
+    `ステータスコード`,
+    `상태 코드`,
+    `Код состояния`,
+  ],
+  _状态码0的提示: [
     '请求的 URL 不可访问 (0)',
     '要求的 URL 無法存取 (0)',
     'The requested URL is not accessible (0)',
@@ -894,45 +918,85 @@ Zip 파일이 원본 파일입니다.`,
     '요청한 URL에 접근할 수 없습니다 (0)',
     'Запрашиваемый URL недоступен (0)',
   ],
-  _作品页状态码400: [
-    '该作品已被删除 (400)',
-    '該作品已被刪除 (400)',
-    'The work has been deleted (400)',
-    '作品は削除されました (400)',
-    '이 작품은 삭제되었습니다 (400)',
-    'Работа была удалена (400)',
+  _状态码400的提示: [
+    `请求无效，可能是格式错误，或者请求的资源已经不存在（400 Bad Request）`,
+    `請求無效，可能是格式錯誤，或者請求的資源已經不存在（400 Bad Request）`,
+    `Invalid request, possibly due to format error, or the requested resource no longer exists (400 Bad Request)`,
+    `無効なリクエストです。フォーマットエラー、またはリクエストされたリソースがすでに存在しない可能性があります（400 Bad Request）`,
+    `잘못된 요청, 형식 오류일 수 있거나 요청한 리소스가 이미 존재하지 않을 수 있습니다(400 Bad Request)`,
+    `Недействительный запрос, возможно, ошибка формата или запрашиваемый ресурс уже не существует (400 Bad Request)`,
   ],
-  _请您登录Pixiv账号然后重试_401: [
-    '请您登录 Pixiv 账号然后重试。(401)',
-    '請您登入 Pixiv 帳號後重試。(401)',
-    'Please log in to your Pixiv account and try again. (401)',
-    'Pixiv アカウントにログインして、もう一度お試しください。(401)',
-    'Pixiv 계정에 로그인 후 다시 시도해주세요. (401)',
-    'Пожалуйста, войдите в свою учетную запись Pixiv и попробуйте еще раз. (401)',
+  _状态码401的提示: [
+    `未授权，请您登录 Pixiv 账号然后重试（401 Unauthorized）`,
+    `未授權，請您登錄 Pixiv 帳號然後重試（401 Unauthorized）`,
+    `Unauthorized, please log in to your Pixiv account and try again (401 Unauthorized)`,
+    `未承認です。Pixiv アカウントにログインして再試行してください（401 Unauthorized）`,
+    `권한 없음, Pixiv 계정에 로그인한 후 다시 시도해 주세요 (401 Unauthorized)`,
+    `Не авторизовано, пожалуйста, войдите в аккаунт Pixiv и попробуйте снова (401 Unauthorized)`,
   ],
-  _作品页状态码403: [
-    '无权访问请求的 URL (403)',
-    '沒有權限存取要求的 URL (403)',
-    'Have no access to the requested URL (403)',
-    'リクエストされた URL にアクセスできない (403)',
-    '요청한 URL에 접근 권한이 없습니다 (403)',
-    'Нет доступа к запрашиваемому URL (403)',
+  _状态码403的提示: [
+    `禁止访问。您可能没有权限访问这个 URL（403 Forbidden）`,
+    `禁止訪問。您可能沒有權限訪問這個 URL（403 Forbidden）`,
+    `Access forbidden. You may not have permission to access this URL (403 Forbidden)`,
+    `アクセス禁止。この URL にアクセスする権限がない可能性があります（403 Forbidden）`,
+    `접근 금지. 이 URL에 접근할 권한이 없을 수 있습니다(403 Forbidden)`,
+    `Доступ запрещен. Возможно, у вас нет прав доступа к этому URL (403 Forbidden)`,
   ],
-  _作品页状态码404: [
-    '404 not found',
-    '404 not found',
-    '404 not found',
-    '404 not found',
-    '404 not found',
-    '404 not found',
+  _状态码404的提示: [
+    `要获取的数据不存在（404 Not Found）`,
+    `要獲取的數據不存在（404 Not Found）`,
+    `The data to be retrieved does not exist (404 Not Found)`,
+    `取得するデータが存在しません（404 Not Found）`,
+    `가져올 데이터가 존재하지 않습니다(404 Not Found)`,
+    `Данные для получения не существуют (404 Not Found)`,
   ],
-  _作品页状态码429: [
-    '错误代码：429（请求数量过多）。下载器会重新抓取它。',
-    '錯誤程式碼：429（請求數量過多）。下載器会重新抓取它。',
-    'Error code: 429 (Too many requests). The downloader will re-crawl it.',
-    'エラー コード: 429 (要求が多すぎます)。ダウンローダーはそれを再クロールします。',
-    '오류 코드: 429(요청이 너무 많음). 다운로더가 다시 크롤링합니다.',
-    'Код ошибки: 429 (Слишком много запросов). Загрузчик будет повторять вытаскивание.',
+  _该作品可能已经被删除或者需要成为作者的好友才能查看: [
+    `该作品可能已经被删除，或者需要成为作者的 Pixiv 好友才能查看`,
+    `該作品可能已經被刪除，或者需要成為作者的 Pixiv 好友才能查看`,
+    `This work may have been deleted, or you need to become the author's Pixiv friend to view it`,
+    `この作品は削除された可能性があります。あるいは、作者の Pixiv 友達になる必要があります`,
+    `이 작품은 삭제되었을 수 있으며, 작가의 Pixiv 친구가 되어야 볼 수 있습니다`,
+    `Это произведение, возможно, было удалено, или вам нужно стать Pixiv-другом автора, чтобы просмотреть его`,
+  ],
+  _状态码429下载器会重试的提示: [
+    `请求太频繁（429 Too Many Requests）。下载器会等待几分钟，然后重试该请求`,
+    `請求太頻繁（429 Too Many Requests）。下載器會等待幾分鐘，然後重試該請求`,
+    `Too many requests (429 Too Many Requests). The downloader will wait a few minutes and then retry the request`,
+    `リクエストが多すぎます（429 Too Many Requests）。ダウンロードツールは数分間待機してから、このリクエストを再試行します`,
+    `요청이 너무 빈번합니다(429 Too Many Requests). 다운로더가 몇 분 동안 기다린 후 해당 요청을 재시도합니다`,
+    `Слишком много запросов (429 Too Many Requests). Загрузчик подождёт несколько минут, а затем повторит запрос`,
+  ],
+  _状态码429的提示: [
+    `请求太频繁（429 Too Many Requests）`,
+    `請求太頻繁（429 Too Many Requests）`,
+    `Too many requests (429 Too Many Requests)`,
+    `リクエストが多すぎます（429 Too Many Requests）`,
+    `요청이 너무 빈번합니다(429 Too Many Requests)`,
+    `Слишком много запросов (429 Too Many Requests)`,
+  ],
+  _下载器会等待几分钟然后重试: [
+    `下载器会等待几分钟，然后重试该请求`,
+    `下載器會等待幾分鐘，然後重試該請求`,
+    `The downloader will wait a few minutes and then retry the request`,
+    `ダウンロードツールは数分間待機してから、このリクエストを再試行します`,
+    `다운로더가 몇 분 동안 기다린 후 해당 요청을 재시도합니다`,
+    `Загрузчик подождёт несколько минут, а затем повторит запрос`,
+  ],
+  _状态码500的提示: [
+    `服务器处理该请求时发生了错误（500 Internal Server Error）`,
+    `伺服器處理該請求時發生了錯誤（500 Internal Server Error）`,
+    `An error occurred while the server was processing this request (500 Internal Server Error)`,
+    `サーバーがこのリクエストを処理中にエラーが発生しました（500 Internal Server Error）`,
+    `서버가 이 요청을 처리하는 동안 오류가 발생했습니다(500 Internal Server Error)`,
+    `Во время обработки этого запроса сервером произошла ошибка (500 Internal Server Error)`,
+  ],
+  _状态码503的提示: [
+    `服务器目前无法处理该请求（503 Service Unavailable）`,
+    `伺服器目前無法處理該請求（503 Service Unavailable）`,
+    `The server is currently unable to process this request (503 Service Unavailable)`,
+    `サーバーが現在このリクエストを処理できません（503 Service Unavailable）`,
+    `서버가 현재 이 요청을 처리할 수 없습니다(503 Service Unavailable)`,
+    `Сервер в настоящее время не может обработать этот запрос (503 Service Unavailable)`,
   ],
   _错误代码: [
     '错误代码',
@@ -942,13 +1006,13 @@ Zip 파일이 원본 파일입니다.`,
     '오류 코드',
     'Код ошибки',
   ],
-  _作品页状态码500: [
-    'Pixiv 拒绝返回数据 (500)。下载器会重新抓取它。',
-    'Pixiv 拒絕返回資料 (500)。下載器会重新抓取它。',
-    'Pixiv refuses to return data (500). The downloader will re-crawl it.',
-    'ピクシブはデータの返却を拒否します (500)。ダウンローダーはそれを再クロールします。',
-    'pixiv는 데이터 반환을 거부합니다 (500). 다운로더가 다시 크롤링합니다.',
-    'Pixiv отказывается возвращать данные (500). Загрузчик будет повторять вытаскивание.',
+  _网络错误状态码为x网址为y: [
+    `网络错误，状态码 {}，网址：<br>{}`,
+    `網路錯誤，狀態碼 {}，網址：<br>{}`,
+    `Network error, status code {}, URL: <br>{}`,
+    `ネットワークエラー、ステータスコード {}、URL: <br>{}`,
+    `네트워크 오류, 상태 코드 {}, URL: <br>{}`,
+    `Сетевая ошибка, код состояния {}, URL: <br>{}`,
   ],
   _正在抓取: [
     '正在抓取，请等待……',
@@ -1169,6 +1233,22 @@ Zip 파일이 원본 파일입니다.`,
     '단순화된 북마크 수. 예: <span class="blue">0+</span>, <span class="blue">1000+</span>, <span class="blue">2000+</span>, <span class="blue">3000+</span> ……',
     'Упрощенное количество закладок, напр. <span class="blue">0+</span>、<span class="blue">1000+</span>、<span class="blue">2000+</span>、<span class="blue">3000+</span> ......',
   ],
+  _命名标记age: [
+    `作品的年龄限制，分为：<span class="blue">All Ages</span>、<span class="blue">R-18</span>、<span class="blue">R-18G</span>`,
+    `作品的年齡限制，分為：<span class="blue">All Ages</span>、<span class="blue">R-18</span>、<span class="blue">R-18G</span>`,
+    `The age restriction of the work is divided into: <span class="blue">All Ages</span>, <span class="blue">R-18</span>, <span class="blue">R-18G</span>`,
+    `作品の年齢制限は、<span class="blue">All Ages</span>、<span class="blue">R-18</span>、<span class="blue">R-18G</span>に分かれます`,
+    `작품의 연령 제한은 <span class="blue">All Ages</span>、<span class="blue">R-18</span>、<span class="blue">R-18G</span>으로 나뉩니다`,
+    `Возрастное ограничение работы разделено на: <span class="blue">All Ages</span>, <span class="blue">R-18</span>, <span class="blue">R-18G</span>`,
+  ],
+  _命名标记age_r: [
+    `仅当作品为限制级时，输出它的年龄限制，分为：<span class="blue">R-18</span>、<span class="blue">R-18G</span>，否则忽略它。`,
+    `僅當作品為限制級時，輸出它的年齡限制，分為：<span class="blue">R-18</span>、<span class="blue">R-18G</span>，否則忽略它。`,
+    `Output its age restriction only when the work is restricted, divided into: <span class="blue">R-18</span>, <span class="blue">R-18G</span>; otherwise, ignore it.`,
+    `作品が制限級の場合のみ、その年齢制限を出力：<span class="blue">R-18</span>、<span class="blue">R-18G</span>。それ以外の場合はそれを無視します。`,
+    `작품이 제한 등급일 때만 그 연령 제한을 출력：<span class="blue">R-18</span>、<span class="blue">R-18G</span>。그렇지 않으면 이를 무시합니다。`,
+    `Выводить возрастное ограничение только если работа ограничена, разделено на: <span class="blue">R-18</span>, <span class="blue">R-18G</span>; в противном случае игнорируйте его。`,
+  ],
   _命名标记like: [
     'Like count，作品的点赞数。',
     'Like count，作品的點讚數。',
@@ -1186,20 +1266,20 @@ Zip 파일이 원본 파일입니다.`,
     'Колличество просмотров',
   ],
   _命名标记id_num: [
-    '数字 ID，如 <span class="blue">44920385</span>',
-    '數字 ID，例如：<span class="blue">44920385</span>。',
-    'Number ID, for example <span class="blue">44920385</span>',
-    '<span class="blue">44920385</span> などの番号 ID',
-    '숫자 ID. 예: <span class="blue">44920385</span>',
-    'Идентификатор номера, например <span class="blue">44920385</span>',
+    `作品的数字 ID，不包括序号，例如 <span class="blue">62751951</span>。`,
+    `作品的數字 ID，不包括序號，例如 <span class="blue">62751951</span>。`,
+    `The numeric ID of the work, excluding the sequence number, for example <span class="blue">62751951</span>.`,
+    `作品の数字 ID、シーケンス番号を含まない、例：<span class="blue">62751951</span>。`,
+    `작품의 숫자 ID, 순서 번호를 포함하지 않음, 예: <span class="blue">62751951</span>。`,
+    `Числовой ID работы, без порядкового номера, например <span class="blue">62751951</span>.`,
   ],
   _命名标记p_num: [
-    '图片在作品内的序号，如 <span class="blue">0</span>、<span class="blue">1</span>、<span class="blue">2</span> …… 每个作品都会重新计数。',
-    '圖片在作品內的序號，例如：<span class="blue">0</span>、<span class="blue">1</span>、<span class="blue">2</span>……每個作品都將重新計數。',
-    'The serial number of the image in the work, such as <span class="blue">0</span>, <span class="blue">1</span>, <span class="blue">2</span> ... Each work will be recounted.',
-    '<span class="blue">0</span>、<span class="blue">1</span>、<span class="blue">2</span> など、作品の画像のシリアル番号。各ピースは再集計されます。',
-    '작품 안에 있는 번호. 예: <span class="blue">0</span>, <span class="blue">1</span>, <span class="blue">2</span> …… 작품마다 다시 세어봅니다.',
-    'Порядковый номер изображения в работе, например, <span class="blue">0</span>, <span class="blue">1</span>, <span class="blue">2</span> .... Каждое произведение будет пересказано',
+    `图片在作品内的序号，例如 <span class="blue">0</span>、<span class="blue">1</span>、<span class="blue">2</span> …… 每个作品都会重新计数。小说作品没有这个属性，下载器会忽略它。`,
+    `圖片在作品內的序號，例如 <span class="blue">0</span>、<span class="blue">1</span>、<span class="blue">2</span> …… 每個作品都會重新計數。小說作品沒有這個屬性，下載器會忽略它。`,
+    `The sequence number of the image within the work, for example <span class="blue">0</span>, <span class="blue">1</span>, <span class="blue">2</span> ... Each work will recount. Novel works do not have this property, and the downloader will ignore it.`,
+    `作品内の画像のシーケンス番号、例：<span class="blue">0</span>、<span class="blue">1</span>、<span class="blue">2</span> …… 各作品で再カウントされます。小説作品にはこの属性がなく、ダウンロードツールはそれを無視します。`,
+    `작품 내 이미지의 순서 번호, 예: <span class="blue">0</span>、<span class="blue">1</span>、<span class="blue">2</span> …… 각 작품마다 다시 카운트됩니다. 소설 작품에는 이 속성이 없으며, 다운로더는 이를 무시합니다.`,
+    `Серийный номер изображения в работе, например <span class="blue">0</span>, <span class="blue">1</span>, <span class="blue">2</span> ... Каждая работа пересчитывается. У романов нет этого свойства, и загрузчик игнорирует его。`,
   ],
   _命名标记tags_trans: [
     '作品的标签列表，附带翻译后的标签（如果有）',
@@ -1234,12 +1314,12 @@ Zip 파일이 원본 파일입니다.`,
     'Время, когда содержание работы было изменено в последний раз. Например, <span class="blue">2019-08-30</span>.',
   ],
   _命名标记rank: [
-    '作品在排行榜中的排名。如 <span class="blue">#1</span>、<span class="blue">#2</span> …… 只能在排行榜页面中使用。',
-    '作品在排行榜中的排名。例如：<span class="blue">#1</span>、<span class="blue">#2</span>……只能在排行榜頁面中使用。',
-    'The ranking of the work in the ranking pages. Such as <span class="blue">#1</span>, <span class="blue">#2</span> ... Can only be used in ranking pages.',
-    '作品のランキング。例え　<span class="blue">#1</span>、<span class="blue">#2</span> …… ランキングページのみで使用できます。',
-    '작품의 랭킹. 예: <span class="blue">#1</span>, <span class="blue">#2</span> …… 랭킹 페이지에서만 사용할 수 있습니다.',
-    'Рейтинг работы на страницах рейтинга. Например, <span class="blue">#1</span>, <span class="blue">#2</span> ... Может использоваться только на страницах ранжирования.',
+    `作品在排行榜中的排名。如 <span class="blue">#1</span>、<span class="blue">#2</span> …… 只能在排行榜页面中使用，在其他页面里会被忽略。`,
+    `作品在排行榜中的排名。如 <span class="blue">#1</span>、<span class="blue">#2</span> …… 只能在排行榜頁面中使用，在其他頁面裡會被忽略。`,
+    `The ranking of the work in the leaderboard. Such as <span class="blue">#1</span>, <span class="blue">#2</span> ... Can only be used on the leaderboard page, and will be ignored on other pages.`,
+    `作品のランキングボードでの順位。例：<span class="blue">#1</span>、<span class="blue">#2</span> …… ランキングボードページでのみ使用可能で、他のページでは無視されます。`,
+    `작품의 랭킹 보드 순위. 예: <span class="blue">#1</span>、<span class="blue">#2</span> …… 랭킹 보드 페이지에서만 사용할 수 있으며, 다른 페이지에서는 무시됩니다。`,
+    `Рейтинг работы в лидерборде. Например <span class="blue">#1</span>, <span class="blue">#2</span> ... Можно использовать только на странице лидерборда, на других страницах будет игнорироваться。`,
   ],
   _命名标记type: [
     '作品类型，分为：<span class="blue">Illustration</span>, <span class="blue">Manga</span>, <span class="blue">Ugoira</span>, <span class="blue">Novel</span>',
@@ -1250,12 +1330,12 @@ Zip 파일이 원본 파일입니다.`,
     'Тип работы, разделенный на：<span class="blue">Illustration</span>, <span class="blue">Manga</span>, <span class="blue">Ugoira</span>, <span class="blue">Novel</span>',
   ],
   _命名标记AI: [
-    '如果作品是由 AI 生成的，则输出 <span class="blue">AI</span>',
-    '如果作品是由 AI 生成的，則輸出 <span class="blue">AI</span>',
-    'If the work is generated by AI, output <span class="blue">AI</span>',
-    '作品がAIで生成された場合、<span class="blue">AI</span>を出力',
-    '작업이 AI로 생성된 경우 <span class="blue">AI</span> 출력',
-    'Если работа создана с помощью ИИ, выведите <span class="blue">AI</span>',
+    `如果作品是由 AI 生成的，则输出 <span class="blue">AI</span>，否则忽略它。`,
+    `如果作品是由 AI 生成的，則輸出 <span class="blue">AI</span>，否則忽略它。`,
+    `If the work is AI-generated, output <span class="blue">AI</span>; otherwise, ignore it.`,
+    `作品がAI生成の場合、<span class="blue">AI</span>を出力します。それ以外の場合はそれを無視します。`,
+    `작품이 AI 생성이라면 <span class="blue">AI</span>를 출력하며, 그렇지 않으면 이를 무시합니다。`,
+    `Если работа сгенерирована ИИ, выведите <span class="blue">AI</span>; в противном случае игнорируйте её。`,
   ],
   _命名标记提醒: [
     `你可以使用多个标记，并且可以在标记之间添加自定义文字。例如：pixiv/{id}-title {title}-user {user}<br>
@@ -1278,12 +1358,12 @@ Zip 파일이 원본 파일입니다.`,
     Чтобы предотвратить дублирование имен файлов, правило именования должно содержать {id} или {id_num}{p_num}.`,
   ],
   _有些标记并不总是可用的提醒: [
-    '有些标记并不总是可用，有时它们可能什么都不输出。',
-    '有些標記並不總是可用，有時它們可能什麼都不輸出。',
-    'Some tags are not always available, and sometimes they may output nothing.',
-    '一部のタグは常に使用できるとは限らず、何も出力しない場合もあります。',
-    '일부 태그는 항상 사용할 수 있는 것은 아니며 때로는 아무 것도 출력하지 않을 수도 있습니다.',
-    'Некоторые теги не всегда доступны, а иногда могут ничего не выводить.',
+    `有些标记并不总是可用，有时它们会是空字符串，下载器会忽略它们。`,
+    `有些標記並不總是可用，有時它們會是空字符串，下載器會忽略它們。`,
+    `Some tags are not always available, and sometimes they will be empty strings, which the downloader will ignore.`,
+    `一部のタグは常に利用可能ではなく、時には空文字列になり、ダウンロードツールはそれらを無視します。`,
+    `일부 태그는 항상 사용 가능하지 않으며, 때때로 빈 문자열이 되어 다운로더가 이를 무시합니다.`,
+    `Некоторые теги не всегда доступны, иногда они будут пустыми строками, и загрузчик их игнорирует。`,
   ],
   _命名规则一定要包含id: [
     '为了防止文件名重复，命名规则里一定要包含 {id} 或者 {id_num}{p_num}',
@@ -1294,12 +1374,12 @@ Zip 파일이 원본 파일입니다.`,
     'Чтобы предотвратить дублирование имен файлов, {id} или {id_num}{p_num} должны быть включены в правила именования.',
   ],
   _文件夹标记PTag: [
-    '如果页面里的作品属于同一个标签，则输出这个标签。',
-    '如果頁面裡的作品屬於同一個標籤，則輸出這個標籤。',
-    'If the works on the page belong to the same tag, then output this tag.',
-    'ページ上の作品が同じタグに属している場合は、このタグを出力します。',
-    '페이지의 작품이 같은 태그에 속하는 경우 이 태그를 출력합니다.',
-    'Если работы на странице относятся к одному и тому же тегу, то выводить этот тег.',
+    `如果页面里的作品属于同一个标签，下载器会输出这个标签，否则忽略它。通常当你处于这些页面里时有值：搜索某个标签、在用户主页里查看某个标签分类下的作品、在自己的收藏里查看某个标签分类下的作品。`,
+    `如果頁面裡的作品屬於同一個標籤，下載器會輸出這個標籤，否則忽略它。通常當你處於這些頁面裡時有值：搜尋某個標籤、在用戶主頁裡查看某個標籤分類下的作品、在自己的收藏裡查看某個標籤分類下的作品。`,
+    `If the works on the page belong to the same tag, the downloader will output this tag; otherwise, ignore it. It usually has a value when you are on these pages: searching for a certain tag, viewing works under a certain tag category on the user page, viewing works under a certain tag category in your own bookmarks.`,
+    `ページ内の作品が同じタグに属する場合、ダウンロードツールはこのタグを出力します。それ以外の場合はそれを無視します。通常、これらのページにいる場合に値があります：特定のタグを検索する場合、ユーザーページで特定のタグカテゴリの下の作品を表示する場合、自分のブックマークで特定のタグカテゴリの下の作品を表示する場合。`,
+    `페이지의 작품이 동일한 태그에 속하면 다운로더가 이 태그를 출력합니다. 그렇지 않으면 이를 무시합니다. 일반적으로 이러한 페이지에 있을 때 값이 있습니다: 특정 태그 검색 시, 사용자 페이지에서 특정 태그 카테고리 아래 작품 보기, 자신의 북마크에서 특정 태그 카테고리 아래 작품 보기。`,
+    `Если работы на странице принадлежат одному и тому же тегу, загрузчик выведет этот тег; в противном случае игнорируйте его. Обычно имеет значение, когда вы находитесь на этих страницах: при поиске определенного тега, просмотре работ под определенной категорией тега на странице пользователя, просмотре работ под определенной категорией тега в своих закладках。`,
   ],
   _命名标记seriesTitle: [
     '系列标题。',
@@ -1318,12 +1398,12 @@ Zip 파일이 원본 파일입니다.`,
     'Номер работы в серии, например, <span class="blue">#1</span> <span class="blue">#2</span>.',
   ],
   _命名标记seriesId: [
-    '系列 ID。',
-    '系列 ID。',
-    'Series ID.',
-    'シリーズ ID。',
-    '시리즈 ID.',
-    'Идентификатор серии.',
+    `系列 ID，是数字。`,
+    `系列 ID，是數字。`,
+    `Series ID, it is a number.`,
+    `シリーズ ID、数値です。`,
+    `시리즈 ID, 숫자입니다。`,
+    `ID серии, это число。`,
   ],
   _当作品属于一个系列时可用: [
     '当作品属于一个系列时可用。',
@@ -1658,12 +1738,12 @@ So the file name set by the Downloader is lost, and the file name becomes the la
     'Загрузка',
   ],
   _下载完毕: [
-    '✓ 下载完毕',
-    '✓ 下載完畢',
-    '✓ Download complete',
-    '✓ ダウンロードが完了しました',
-    '✓ 다운로드 완료',
-    '✓ Загрузка завершена',
+    '下载完毕',
+    '下載完畢',
+    'Download complete',
+    'ダウンロードが完了しました',
+    '다운로드 완료',
+    'Загрузка завершена',
   ],
   _下载完毕2: [
     '下载完毕',
@@ -1994,13 +2074,21 @@ So the file name set by the Downloader is lost, and the file name becomes the la
     '올바르지 않은 ID',
     'Это ID неверно',
   ],
-  _快速收藏: [
+  _快速收藏AltB: [
     '快速收藏 (Alt + B)',
     '快速收藏 (Alt + B)',
     'Quick bookmarks (Alt + B)',
     'クイックブックマーク (Alt + B)',
     '빠른 북마크 (Alt + B)',
     'Быстрые закладки (Alt + B)',
+  ],
+  _取消收藏AltB: [
+    `取消收藏(Alt + B)`,
+    `取消收藏(Alt + B)`,
+    `Cancel bookmark (Alt + B)`,
+    `ブックマークをキャンセル(Alt + B)`,
+    `북마크 취소(Alt + B)`,
+    `Отменить закладку (Alt + B)`,
   ],
   _启用: ['启用', '啟用', 'Enable', '有効にする', '활성화', 'Включить'],
   _自动开始下载: [
@@ -2397,6 +2485,111 @@ So the file name set by the Downloader is lost, and the file name becomes the la
     '시리즈 소설 합치기',
     'Объединить серию новелл',
   ],
+  _已合并系列小说: [
+    `已合并系列小说`,
+    `已合併系列小說`,
+    `Series novels merged`,
+    `シリーズ小説をマージ済み`,
+    `시리즈 소설 병합됨`,
+    `Серии романов объединены`,
+  ],
+  _获取小说列表: [
+    `获取小说列表`,
+    `獲取小說列表`,
+    `Get novel list`,
+    `小説リストを取得`,
+    `소설 목록 가져오기`,
+    `Получить список романов`,
+  ],
+  _发生错误取消合并这个系列小说: [
+    `发生错误，取消合并这个系列小说`,
+    `發生錯誤，取消合併這個系列小說`,
+    `An error occurred, cancel merging this novel series`,
+    `エラーが発生しました。このシリーズ小説のマージをキャンセル`,
+    `오류가 발생했습니다. 이 시리즈 소설 병합 취소`,
+    `Произошла ошибка, отменить слияние этой серии романов`,
+  ],
+  _获取小说数据进度: [
+    `获取小说数据 {}`,
+    `獲取小說數據 {}`,
+    `Fetching novel data {}`,
+    `小説データを取得中 {}`,
+    `소설 데이터 가져오는 중 {}`,
+    `Получение данных романа {}`,
+  ],
+  _跳过这个小说: [
+    `跳过这个小说`,
+    `跳過這個小說`,
+    `Skip this novel`,
+    `この小説をスキップ`,
+    `이 소설 건너뛰기`,
+    `Пропустить этот роман`,
+  ],
+  _下载小说封面失败: [
+    `下载小说封面失败`,
+    `下載小說封面失敗`,
+    `Failed to download novel cover`,
+    `小説の表紙のダウンロードに失敗しました`,
+    `소설 표지 다운로드 실패`,
+    `Не удалось скачать обложку романа`,
+  ],
+  _下载小说里的图片失败: [
+    `下载小说里的图片失败`,
+    `下載小說裡的圖片失敗`,
+    `Failed to download images in the novel`,
+    `小説内の画像のダウンロードに失敗しました`,
+    `소설 내 이미지 다운로드 실패`,
+    `Не удалось скачать изображения в романе`,
+  ],
+  _系列简介: [`简介`, `簡介`, `Caption`, `キャプション`, `캡션`, `Подпись`],
+  _设定资料: [
+    `设定资料`,
+    `設定資料`,
+    `Glossary`,
+    `設定資料`,
+    `설정 자료`,
+    `Глоссарий`,
+  ],
+  _获取设定资料: [
+    `获取设定资料`,
+    `獲取設定資料`,
+    `Get glossary`,
+    `設定資料を取得`,
+    `설정 자료 가져오기`,
+    `Получить глоссарий`,
+  ],
+  _获取系列数据: [
+    `获取系列数据`,
+    `獲取系列數據`,
+    `Get series data`,
+    `シリーズデータを取得`,
+    `시리즈 데이터 가져오기`,
+    `Получить данные серии`,
+  ],
+  _元数据部分结束: [
+    `元数据部分结束`,
+    `元數據部分結束`,
+    `End of metadata section`,
+    `メタデータ部分終了`,
+    `메타데이터 부분 종료`,
+    `Конец раздела метаданных`,
+  ],
+  _系列小说的元数据部分结束: [
+    `系列小说的元数据部分结束`,
+    `系列小說的元數據部分結束`,
+    `End of metadata section for novel series`,
+    `シリーズ小説のメタデータ部分終了`,
+    `시리즈 소설의 메타데이터 부분 종료`,
+    `Конец раздела метаданных серии романов`,
+  ],
+  _更新日期: [
+    `更新日期`,
+    `更新日期`,
+    `Update date`,
+    `更新日`,
+    `업데이트 날짜`,
+    `Дата обновления`,
+  ],
   _小说保存格式: [
     '<span class="key">小说</span>保存格式',
     '<span class="key">小說</span>儲存格式',
@@ -2429,9 +2622,10 @@ So the file name set by the Downloader is lost, and the file name becomes the la
     '소설의 제목, 저자, 태그 및 기타 정보를 소설의 시작 부분에 저장합니다.',
     'Сохраните название романа, автора, теги и другую информацию в начале романа.',
   ],
+  _作者: [`作者`, `作者`, `Author`, `作者`, `작가`, `Автор`],
   _正在下载小说x中的插画x: [
-    `正在下载小说 {} 中的插画 {}`,
-    `正在下載小說 {} 中的插畫 {}`,
+    `下载小说 {} 中的插画 {}`,
+    `下載小說 {} 中的插畫 {}`,
     `Downloading novel {}'s illustrations {}`,
     `小説 {} 内のイラスト {} をダウンロード中`,
     `소설 {} 내의 일러스트 {} 다운로드 중`,
@@ -2452,6 +2646,14 @@ So the file name set by the Downloader is lost, and the file name becomes the la
     `シリーズ小説 {} の表紙画像をダウンロード`,
     `시리즈 소설 {} 의 표지 이미지 다운로드`,
     `Скачать обложку серии романов {}`,
+  ],
+  _下面是正文: [
+    `下面是正文`,
+    `下面是正文`,
+    `Below is the main text`,
+    `以下は本文`,
+    `아래는 본문`,
+    `Ниже основной текст`,
   ],
   _目录: ['目录', '目錄', 'Table of Contents', '目次', '목차', 'Оглавление'],
   _Information: ['信息', '資訊', 'Information', '情報', '정보', 'Информация'],
@@ -3127,6 +3329,14 @@ This setting is also used when you use the Downloader to bookmark works in batch
     '작품의 일일 평균 북마크 수를 설정할 수 있습니다. 조건을 만족한 작품은 다운로드됩니다.',
     'Вы можете установить среднесуточное количество закладок в работах. Работы, удовлетворяющие условиям, будут загружены.',
   ],
+  _获取关注列表失败: [
+    `获取关注列表失败`,
+    `獲取關注列表失敗`,
+    `Failed to retrieve following list`,
+    `フォロー一覧の取得に失敗`,
+    `팔로우 목록 가져오기 실패`,
+    `Не удалось получить список подписок`,
+  ],
   _导出关注列表CSV: [
     '导出关注的用户列表（CSV）',
     '匯出關注的使用者列表（CSV）',
@@ -3287,6 +3497,14 @@ This setting is also used when you use the Downloader to bookmark works in batch
     '유저 커버 저장',
     'Сохранить обложку пользователя',
   ],
+  _抓取进度: [
+    `抓取进度`,
+    `抓取進度`,
+    `Crawling progress`,
+    `クローリング進捗`,
+    `크롤링 진행`,
+    `Прогресс краулинга`,
+  ],
   _待处理: [
     '待处理',
     '待處理',
@@ -3336,6 +3554,20 @@ This setting is also used when you use the Downloader to bookmark works in batch
     '<span class="key">R-18(G)</span> の作品を指定のフォルダに入れる',
     '<span class="key">R-18(G)</span> 작품을 지정된 디렉토리에 저장',
     'Сохраните <span class="key">R-18(G)</span> работы в указанной папке',
+  ],
+  _把r18作品存入指定的文件夹里可以使用命名标记替代的说明: [
+    `现在你可以使用命名标记 <span class="blue">{age_r}</span> 来取代这个设置：<br>
+仅当作品为限制级时，输出它的年龄限制，分为：<span class="blue">R-18</span>、<span class="blue">R-18G</span>`,
+    `現在你可以使用命名標記 <span class="blue">{age_r}</span> 來取代這個設置：<br>
+僅當作品為限制級時，輸出它的年齡限制，分為：<span class="blue">R-18</span>、<span class="blue">R-18G</span>`,
+    `Now you can use the naming tag <span class="blue">{age_r}</span> to replace this setting:<br>
+Output its age restriction only when the work is restricted, divided into: <span class="blue">R-18</span>, <span class="blue">R-18G</span>`,
+    `今は命名タグ <span class="blue">{age_r}</span> を使用してこの設定を置き換えることができます：<br>
+作品が制限級の場合のみ、その年齢制限を出力：<span class="blue">R-18</span>、<span class="blue">R-18G</span>`,
+    `이제 명명 태그 <span class="blue">{age_r}</span> 를 사용하여 이 설정을 대체할 수 있습니다：<br>
+작품이 제한 등급일 때만 그 연령 제한을 출력：<span class="blue">R-18</span>、<span class="blue">R-18G</span>`,
+    `Теперь вы можете использовать тег именования <span class="blue">{age_r}</span> для замены этой настройки:<br>
+Выводить возрастное ограничение только если работа ограничена, разделено на: <span class="blue">R-18</span>, <span class="blue">R-18G</span>`,
   ],
   _必填项不能为空: [
     '必填项不能为空',
@@ -4410,14 +4642,6 @@ Novel folder name: Novel`,
     '"작품 미리보기" 기능 최적화',
     'Оптимизация "Предварительного просмотра работ" функция',
   ],
-  _设定资料: [
-    '设定资料',
-    '設定資料',
-    'Reference materials',
-    '設定資料',
-    '설정 자료',
-    'Справочные материалы',
-  ],
   _年龄限制: [
     '<span class="key">年龄</span>限制',
     '<span class="key">年齡</span>限制',
@@ -4474,13 +4698,13 @@ Novel folder name: Novel`,
     '움직이는 일러스트 <span class="key">미리보기</span>',
     '<span class="key">Превью</span> Ugoira(анимации)',
   ],
-  _过度访问警告警告: [
-    '下载器检测到你可能收到了 pixiv 的警告消息，这通常是因为过度下载导致的。<br><strong>当你再次被警告时，你会被 Pixiv 封号。</strong><br>我建议你减少下载数量，或者使用新的账号进行下载。',
-    '下載器檢測到你可能收到了 pixiv 的警告訊息，這通常是因為過度下載導致的。<br><strong>當你再次被警告時，你會被 Pixiv 封號。</strong><br>我建議你減少下載數量，或者使用新的賬號進行下載。',
-    'The downloader has detected that you may have received a warning message from pixiv, usually due to excessive downloads.<br><strong>When you are warned again, you will be banned from Pixiv. </strong><br>I suggest you reduce your downloads, or use a new account to download.',
-    'ダウンロードが多すぎるため、pixivから警告メッセージが届いた可能性があることをダウンローダーが検出しました。<br><strong>再度警告を受けた場合、Pixivから追放されます。 </strong><br>ダウンロード数を減らすか、新しいアカウントを使用してダウンロードすることをお勧めします。',
-    '다운로더는 일반적으로 과도한 다운로드로 인해 pixiv에서 경고 메시지를 수신했을 수 있음을 감지했습니다.<br><strong>다시 경고를 받으면 Pixiv에서 차단됩니다. </strong><br>다운로드를 줄이거나 새 계정을 사용하여 다운로드하는 것이 좋습니다.',
-    'Программа загрузки обнаружила, что вы могли получить предупреждающее сообщение от pixiv, обычно из-за чрезмерной загрузки.<br><strong>Когда вы снова получите предупреждение, вы будете заблокированы в Pixiv. </strong><br>Я предлагаю вам сократить количество загрузок или использовать новую учетную запись для загрузки.',
+  _过度访问警告: [
+    `下载器检测到你可能收到了 Pixiv 的警告消息（站内信），这通常是因为过度下载导致的。<br>多次被警告可能会导致你的 Pixiv 账号被封禁。<br>下载器已暂停下载。<br>你可以在 Wiki 查看更详细的说明：<a href="https://xuejianxianzun.github.io/PBDWiki/#/zh-cn/%E5%AE%89%E8%A3%85%E4%B9%8B%E5%90%8E?id=%E5%A4%A7%E9%87%8F%E4%B8%8B%E8%BD%BD%E5%8F%AF%E8%83%BD%E5%AF%BC%E8%87%B4%E4%BD%A0%E7%9A%84%E8%B4%A6%E5%8F%B7%E8%A2%AB%E5%B0%81%E7%A6%81" target="_blank" class="blue">大量下载可能导致你的账号被封禁</a>`,
+    `下載器檢測到你可能收到了 Pixiv 的警告消息（站內信），這通常是因為過度下載導致的。<br>多次被警告可能會導致你的 Pixiv 帳號被封禁。<br>下載器已暫停下載。<br>你可以在 Wiki 查看更詳細的說明：<a href="https://xuejianxianzun.github.io/PBDWiki/#/zh-cn/%E5%AE%89%E8%A3%85%E4%B9%8B%E5%90%8E?id=%E5%A4%A7%E9%87%8F%E4%B8%8B%E8%BD%BD%E5%8F%AF%E8%83%BD%E5%AF%BC%E8%87%B4%E4%BD%A0%E7%9A%84%E8%B4%A6%E5%8F%B7%E8%A2%AB%E5%B0%81%E7%A6%81" target="_blank" class="blue">大量下载可能导致你的账号被封禁</a>`,
+    `The downloader has detected that you may have received a warning message from Pixiv (in-site message), which is usually caused by excessive downloading.<br>Being warned multiple times may lead to your Pixiv account being banned.<br>The downloader has paused downloading.<br>You can view more detailed instructions in the Wiki: <a href="https://xuejianxianzun.github.io/PBDWiki/#/en/AfterInstallation?id=large-downloads-may-lead-to-your-account-being-banned" target="_blank" class="blue">Large Downloads May Lead to Your Account Being Banned</a>`,
+    `ダウンロードツールが Pixiv からの警告メッセージ（サイト内メッセージ）を受信した可能性を検出しました。これは通常、過度なダウンロードが原因です。<br>複数回の警告は Pixiv アカウントの凍結につながる可能性があります。<br>ダウンロードツールはダウンロードを一時停止しました。<br>Wiki で詳細な説明を確認できます：<a href="https://xuejianxianzun.github.io/PBDWiki/#/en/AfterInstallation?id=large-downloads-may-lead-to-your-account-being-banned" target="_blank" class="blue">Large Downloads May Lead to Your Account Being Banned</a>`,
+    `다운로더가 Pixiv의 경고 메시지(사이트 내 메시지)를 받았을 가능성을 감지했습니다. 이는 보통 과도한 다운로드로 인한 것입니다.<br>여러 번 경고를 받으면 Pixiv 계정이 차단될 수 있습니다.<br>다운로더가 다운로드를 일시 중지했습니다.<br>Wiki에서 더 자세한 설명을 확인할 수 있습니다: <a href="https://xuejianxianzun.github.io/PBDWiki/#/en/AfterInstallation?id=large-downloads-may-lead-to-your-account-being-banned" target="_blank" class="blue">Large Downloads May Lead to Your Account Being Banned</a>`,
+    `Загрузчик обнаружил, что вы, возможно, получили предупреждение от Pixiv (сообщение на сайте), что обычно вызвано чрезмерной загрузкой.<br>Многократные предупреждения могут привести к блокировке вашего аккаунта Pixiv.<br>Загрузчик приостановил загрузку.<br>Вы можете просмотреть более подробные инструкции в Wiki: <a href="https://xuejianxianzun.github.io/PBDWiki/#/en/AfterInstallation?id=large-downloads-may-lead-to-your-account-being-banned" target="_blank" class="blue">Large Downloads May Lead to Your Account Being Banned</a>`,
   ],
   _下载小说里的内嵌图片: [
     '下载小说里的<span class="key">内嵌</span>图片',
@@ -4799,29 +5023,21 @@ Novel folder name: Novel`,
     '성능과 사용자 경험을 최적화합니다.',
     'Оптимизация производительности и пользовательского опыта',
   ],
-  _优化用户体验: [
-    `优化用户体验`,
-    `優化使用者體驗`,
-    `Optimize User Experience`,
-    `ユーザーエクスペリエンスの最適化`,
-    `사용자 경험 최적화`,
-    `Оптимизация пользовательского опыта`,
-  ],
   _修复bug: [
-    '修复 bug',
-    '修復 bug',
-    'fix bugs',
-    'バグを修正',
-    '버그 수정',
-    'Баг фикс',
+    `<strong>🐞 修复bug</strong>`,
+    `<strong>🐞 修復bug</strong>`,
+    `<strong>🐞 Bug Fix</strong>`,
+    `<strong>🐞 バグ修正</strong>`,
+    `<strong>🐞 버그 수정</strong>`,
+    `<strong>🐞 Исправление ошибок</strong>`,
   ],
-  _修复已知问题: [
-    '修复已知问题。',
-    '修復已知問題。',
-    'fix known issues.',
-    '既知の問題を修正する。',
-    '알려진 문제 수정。',
-    'исправить известные проблемы。',
+  _优化用户体验: [
+    `<strong>😊 优化用户体验</strong>`,
+    `<strong>😊 優化用戶體驗</strong>`,
+    `<strong>😊 Optimized User Experience</strong>`,
+    `<strong>😊 ユーザーエクスペリエンスの最適化</strong>`,
+    `<strong>😊 사용자 경험 최적화</strong>`,
+    `<strong>😊 Оптимизация пользовательского опыта</strong>`,
   ],
   _不支持的浏览器: [
     '你的浏览器不能正常使用这个扩展程序，主要原因可能是浏览器内核版本太低，或者存在兼容性问题。<br>建议您更换成最新版本的 Chrome 或 Edge 浏览器。',
@@ -4911,6 +5127,14 @@ Novel folder name: Novel`,
     '작품 북마크 해제',
     'Снять закладку с работ',
   ],
+  _已取消收藏: [
+    `已取消收藏`,
+    `已取消收藏`,
+    `Bookmark canceled`,
+    `ブックマークをキャンセルしました`,
+    `북마크 취소됨`,
+    `Закладка отменена`,
+  ],
   _收藏页面里的按钮: [
     '当你在自己的收藏页面时，可以在“更多”选项卡里看到这个按钮。',
     '當你在自己的收藏頁面時，可以在“更多”選項卡里看到這個按鈕。',
@@ -4942,6 +5166,14 @@ Novel folder name: Novel`,
     'ブックマークを追加できませんでした',
     '북마크 추가 실패',
     'Не удалось добавить закладку',
+  ],
+  _点赞失败: [
+    `点赞失败`,
+    `點讚失敗`,
+    `Like failed`,
+    `いいね失敗`,
+    `좋아요 실패`,
+    `Лайк не удался`,
   ],
   _下载器会在几分钟后重试: [
     '下载器会在几分钟后重试。',
@@ -5022,12 +5254,12 @@ Novel folder name: Novel`,
     'Экспорт <span class="key">журнала</span>',
   ],
   _导出日志成功: [
-    '✓ 导出日志',
-    '✓ 匯出日誌',
-    '✓ Export log',
-    '✓ ログのエクスポート',
-    '✓ 내보내기 로그',
-    '✓ Экспорт журнала',
+    '导出日志',
+    '匯出日誌',
+    'Export log',
+    'ログのエクスポート',
+    '내보내기 로그',
+    'Экспорт журнала',
   ],
   _导出时机: [
     '导出时机',
@@ -6838,14 +7070,6 @@ If you want to use this feature, please note:
     `이것은 데뷔 작품이 아닙니다`,
     `Это не дебютная работа`,
   ],
-  _QQ修复了粘贴问题的提醒: [
-    `对使用下载器的“复制功能”的用户的提醒：<br> QQ 之前的版本存在 Bug，无法粘贴下载器复制的图文混合内容（text/html）。最近（11月5日）QQ 的新版本修复了此问题，请及时更新。`,
-    `對使用下載器的「複製功能」的用戶的提醒：<br> QQ 之前的版本存在 Bug，無法貼上下載器複製的圖文混合內容（text/html）。最近（11月5日）QQ 的新版本修復了此問題，請及時更新。`,
-    `Reminder for users using the downloader's "copy function":<br> Previous versions of QQ had a bug that prevented pasting the mixed image-text content (text/html) copied by the downloader. The latest version of QQ (November 5th) has fixed this issue, please update promptly.`,
-    `ダウンロードツールの「コピー機能」を使用するユーザーへのリマインダー：<br> QQ の以前のバージョンにはバグがあり、ダウンロードツールでコピーした画像とテキストの混合コンテンツ（text/html）を貼り付けできませんでした。最近（11月5日）の QQ の新バージョンでこの問題が修正されました。速やかに更新してください。`,
-    `다운로더의 "복사 기능"을 사용하는 사용자에게 알림:<br> QQ 이전 버전에는 버그가 있어 다운로더가 복사한 이미지-텍스트 혼합 콘텐츠(text/html)를 붙여넣을 수 없습니다. 최근(11월 5일) QQ 새 버전에서 이 문제가 수정되었습니다. 즉시 업데이트하세요.`,
-    `Напоминание для пользователей, использующих функцию "копирования" загрузчика:<br> В предыдущих версиях QQ была ошибка, из-за которой нельзя было вставить смешанный контент с изображениями и текстом (text/html), скопированный загрузчиком. В последней версии QQ (5 ноября) эта проблема исправлена, пожалуйста, обновите timely.`,
-  ],
   _有同类任务正在执行请等待之前的任务完成: [
     `有同类任务正在执行，请等待之前的任务完成。`,
     `有同類任務正在執行，請等待之前的任務完成。`,
@@ -6934,6 +7158,350 @@ If you want to use this feature, please note:
     `최근 비활성 사용자`,
     `Недавно неактивные пользователи`,
   ],
+  _自动合并系列小说: [
+    `自动<span class="key">合并</span>系列小说`,
+    `自動<span class="key">合併</span>系列小說`,
+    `Automatically <span class="key">merge</span> novel series`,
+    `自動<span class="key">マージ</span>シリーズ小説`,
+    `자동 <span class="key">병합</span> 시리즈 소설`,
+    `Автоматически <span class="key">объединять</span> серии романов`,
+  ],
+  _自动合并系列小说的说明: [
+    `抓取作品时，如果一个小说属于某个系列，就自动抓取这个系列里的所有小说并且合并。`,
+    `抓取作品時，如果一個小說屬於某個系列，就自動抓取這個系列裡的所有小說並且合併。`,
+    `When crawling works, if a novel belongs to a series, automatically crawl all novels in that series and merge them.`,
+    `作品をクロールする際、小説がシリーズに属する場合、そのシリーズ内のすべての小説を自動的にクロールしてマージします。`,
+    `작품을 크롤링할 때, 소설이 특정 시리즈에 속하면 해당 시리즈의 모든 소설을 자동으로 크롤링하여 병합합니다.`,
+    `При краулинге работ, если роман принадлежит серии, автоматически краулить все романы в этой серии и объединять их.`,
+  ],
+  _不再单独下载系列里的小说: [
+    `不再单独下载系列里的小说`,
+    `不再單獨下載系列裡的小說`,
+    `No longer download novels in the series individually`,
+    `シリーズ内の小説を個別にダウンロードしない`,
+    `시리즈 내 소설을 개별적으로 다운로드하지 않음`,
+    `Больше не скачивать романы в серии по отдельности`,
+  ],
+  _不再单独下载系列里的小说的说明: [
+    `当你启用了“自动合并系列小说”时，通常没有必要单独下载系列里的小说，因为它们已经包含在合并后的小说文件里了。<br>如果你仍然想下载它们，可以取消选择这个子设置项。`,
+    `當你啟用了「自動合併系列小說」時，通常沒有必要單獨下載系列裡的小說，因為它們已經包含在合併後的小說檔案裡了。<br>如果你仍然想下載它們，可以取消選擇這個子設置項。`,
+    `When you enable "Automatically merge series novels", there is usually no need to download novels in the series individually, as they are already included in the merged novel file.<br>If you still want to download them, you can uncheck this sub-setting.`,
+    `「自動的にシリーズ小説をマージ」を有効にすると、通常、シリーズ内の小説を個別にダウンロードする必要はありません。それらはすでにマージされた小説ファイルに含まれています。<br>それでもダウンロードしたい場合は、このサブ設定をオフにできます。`,
+    `"시리즈 소설 자동 병합"을 활성화하면, 시리즈 내 소설을 개별적으로 다운로드할 필요가 거의 없습니다. 왜냐하면 그것들이 이미 병합된 소설 파일에 포함되어 있기 때문입니다.<br>그래도 다운로드하고 싶다면 이 하위 설정을 해제할 수 있습니다.`,
+    `При включении «Автоматическое объединение серий романов» обычно нет необходимости скачивать романы в серии по отдельности, поскольку они уже включены в объединенный файл романа.<br>Если вы все же хотите скачать их, вы можете отменить выбор этого поднастройки.`,
+  ],
+  _自动合并系列小说时提示会添加间隔时间: [
+    `开始自动合并系列小说<br>由于每个系列里都可能含有多个小说和图片，所以下载器可能会发送很多请求。为了避免触发 Pixiv 的警告，下载器在合并时总是会添加间隔时间，以降低发送请求的频率`,
+    `開始自動合併系列小說<br>由於每個系列裡都可能含有複數小說和圖片，所以下載器可能會發送很多請求。為了避免觸發 Pixiv 的警告，下載器在合併時總是會添加間隔時間，以降低發送請求的頻率`,
+    `Starting to automatically merge series novels<br>Since each series may contain multiple novels and images, the downloader may send many requests. To avoid triggering Pixiv's warnings, the downloader always adds interval time during merging to reduce the frequency of sending requests`,
+    `シリーズ小説の自動マージを開始します<br>各シリーズには複数の小説と画像が含まれる可能性があるため、ダウンロードツールは多くのリクエストを送信する可能性があります。Pixiv の警告を回避するために、マージ中に常に間隔時間を追加して、リクエスト送信の頻度を下げます`,
+    `시리즈 소설 자동 병합 시작<br>각 시리즈에 여러 소설과 이미지가 포함될 수 있으므로, 다운로더가 많은 요청을 보낼 수 있습니다. Pixiv의 경고를 피하기 위해, 병합 시 항상 간격 시간을 추가하여 요청 전송 빈도를 낮춥니다`,
+    `Начинается автоматическое объединение серий романов<br>Поскольку каждая серия может содержать несколько романов и изображений, загрузчик может отправить много запросов. Чтобы избежать срабатывания предупреждений Pixiv, загрузчик всегда добавляет интервалы времени во время объединения, чтобы снизить частоту отправки запросов`,
+  ],
+  _合并小说时提示用户使用EPUB格式: [
+    `你当前选择的保存格式是 TXT，但是一些阅读器可能无法识别 TXT 里的章节标记，所以我推荐你在合并小说时选择 EPUB 格式`,
+    `你目前選擇的保存格式是 TXT，但是一些閱讀器可能無法識別 TXT 裡的章節標記，所以我推薦你在合併小說時選擇 EPUB 格式`,
+    `Your current selected save format is TXT, but some readers may not recognize the chapter markers in TXT, so I recommend choosing EPUB format when merging novels`,
+    `現在の保存形式は TXT ですが、一部のリーダーは TXT 内の章セクションマーカーを認識できない可能性があるため、小説をマージする際は EPUB 形式を選択することをおすすめします`,
+    `현재 선택한 저장 형식은 TXT이지만, 일부 독자는 TXT의 장 마커를 인식하지 못할 수 있으므로 소설을 병합할 때 EPUB 형식을 선택하는 것을 추천합니다`,
+    `Текущий выбранный формат сохранения — TXT, но некоторые читалки могут не распознавать маркеры глав в TXT, поэтому я рекомендую выбирать формат EPUB при объединении романов`,
+  ],
+  _本次抓取一共合并了x个系列小说: [
+    `本次抓取一共合并了 {} 个系列小说`,
+    `本次抓取一共合併了 {} 個系列小說`,
+    `This crawling merged a total of {} series novels`,
+    `今回のクロールで合計 {} 個のシリーズ小説がマージされました`,
+    `이번 크롤링에서 총 {} 개의 시리즈 소설이 병합되었습니다`,
+    `В этом краулинге было объединено всего {} серий романов`,
+  ],
+  _本次抓取一共合并了x个系列小说包含y篇小说: [
+    `本次抓取一共合并了 {} 个系列小说，包含 {} 篇小说`,
+    `本次抓取一共合併了 {} 個系列小說，包含 {} 篇小說`,
+    `This crawl merged a total of {} novel series, containing {} novels`,
+    `今回のクロールで合計 {} 個のシリーズ小説をマージしました。{} 件の小説を含みます`,
+    `이번 크롤링에서 총 {}개의 시리즈 소설을 병합했습니다. {}편의 소설을 포함합니다`,
+    `В этом крауле всего было объединено {} серий романов, содержащих {} романов`,
+  ],
+  _由于这个系列小说里的图片体积很大所以分割成了x个文件: [
+    `由于这个系列小说里的图片体积很大，所以分割成了 {} 个文件`,
+    `由於這個系列小說裡的圖片體積很大，所以分割成了 {} 個文件`,
+    `Due to the large size of the images in this novel series, it has been split into {} files`,
+    `このシリーズ小説内の画像のサイズが大きいため、{} 個のファイルに分割されました`,
+    `이 시리즈 소설의 이미지 크기가 크기 때문에 {}개의 파일로 분할되었습니다`,
+    `Из-за большого размера изображений в этой серии романов, она была разделена на {} файлов`,
+  ],
+  _提示有一个系列正在合并中: [
+    `注意：有一个系列正在合并中，它会继续工作直到完成合并。如果你不需要它了，可以刷新这个页面`,
+    `注意：有一個系列正在合併中，它會繼續工作直到完成合併。如果你不需要它了，可以刷新這個頁面`,
+    `Note: There is a series currently being merged, and it will continue working until the merge is complete. If you no longer need it, you can refresh this page`,
+    `注意：シリーズが1つマージ中です。マージが完了するまで作業を続けます。それが必要なくなったら、このページを更新できます`,
+    `주의: 시리즈 하나가 병합 중입니다. 병합이 완료될 때까지 작업을 계속합니다. 더 이상 필요하지 않으면 이 페이지를 새로고침할 수 있습니다`,
+    `Примечание: Одна серия в процессе объединения, она продолжит работу до завершения объединения. Если он вам больше не нужен, вы можете обновить эту страницу`,
+  ],
+  _提示点击下方的标记就可以把它复制到剪贴板: [
+    `提示：点击下方的标记就可以把它复制到剪贴板。`,
+    `提示：點擊下方的標記就可以把它複製到剪貼板。`,
+    `Tip: Click the marker below to copy it to the clipboard.`,
+    `ヒント：下のマーカーをクリックすると、それをクリップボードにコピーできます。`,
+    `팁: 아래 표시를 클릭하면 클립보드에 복사할 수 있습니다.`,
+    `Подсказка: Нажмите на маркер ниже, чтобы скопировать его в буфер обмена.`,
+  ],
+  _合并系列小说时的命名规则: [
+    `合并系列小说时的<span class="key">命名</span>规则`,
+    `合併系列小說時的<span class="key">命名</span>規則`,
+    `<span class="key">Naming</span> rule when merging novel series`,
+    `シリーズ小説をマージする際の<span class="key">命名</span>ルール`,
+    `시리즈 소설 병합 시 <span class="key">명명</span> 규칙`,
+    `Правило <span class="key">наименования</span> при объединении серий романов`,
+  ],
+  _系列小说的命名标记提醒: [
+    `这个命名规则用于设置合集文件的名字，而非单个小说的名字。<br>
+可以使用<span class="key">/</span>建立文件夹。<br>
+你可以使用多个标记，也可以添加自定义文字。例如：novel series/title {series_title} id {series_id}<br>
+为了防止文件名重复，建议你始终添加 {series_id}。`,
+    `這個命名規則用於設定合集檔案的名字，而非單個小說的名字。<br>
+可以使用<span class="key">/</span>建立資料夾。<br>
+你可以使用多個標記，也可以添加自訂文字。例如：novel series/title {series_title} id {series_id}<br>
+為了防止檔案名重複，建議你始終添加 {series_id}。`,
+    `This naming rule is used to set the name of the collection file, not the name of individual novels.<br>
+You can use <span class="key">/</span> to create folders.<br>
+You can use multiple tags and add custom text. For example: novel series/title {series_title} id {series_id}<br>
+To prevent duplicate filenames, it is recommended to always add {series_id}.`,
+    `この命名ルールは、単一の小説の名前ではなく、コレクションファイルの名前を設定するために使用されます。<br>
+<span class="key">/</span>を使用してフォルダーを作成できます。<br>
+複数のタグを使用したり、カスタムテキストを追加したりできます。例：novel series/title {series_title} id {series_id}<br>
+ファイル名の重複を防ぐため、常に {series_id} を追加することをお勧めします。`,
+    `이 명명 규칙은 개별 소설의 이름이 아닌 컬렉션 파일의 이름을 설정하는 데 사용됩니다.<br>
+<span class="key">/</span>를 사용하여 폴더를 생성할 수 있습니다.<br>
+여러 태그를 사용하거나 사용자 지정 텍스트를 추가할 수 있습니다. 예: novel series/title {series_title} id {series_id}<br>
+파일 이름 중복을 방지하기 위해 항상 {series_id}를 추가하는 것을 권장합니다.`,
+    `Это правило именования используется для установки имени файла коллекции, а не имени отдельных романов.<br>
+Вы можете использовать <span class="key">/</span> для создания папок.<br>
+Вы можете использовать несколько тегов и добавлять пользовательский текст. Например: novel series/title {series_title} id {series_id}<br>
+Чтобы предотвратить дублирование имен файлов, рекомендуется всегда добавлять {series_id}.`,
+  ],
+  _系列小说的命名标记_series_title: [
+    `系列标题`,
+    `系列標題`,
+    `Series title`,
+    `シリーズタイトル`,
+    `시리즈 제목`,
+    `Название серии`,
+  ],
+  _系列小说的命名标记_series_id: [
+    `系列 ID，是数字。`,
+    `系列 ID，是數字。`,
+    `Series ID, it is a number.`,
+    `シリーズ ID、数値です。`,
+    `시리즈 ID, 숫자입니다。`,
+    `ID серии, это число。`,
+  ],
+  _系列小说的命名标记_user: [
+    `用户名（作者的名字）`,
+    `用戶名（作者的名字）`,
+    `Username (author's name)`,
+    `ユーザー名（作者の名前）`,
+    `사용자 이름 (작가의 이름)`,
+    `Имя пользователя (имя автора)`,
+  ],
+  _系列小说的命名标记_user_id: [
+    `用户（作者）的 ID，是数字`,
+    `用戶（作者）的 ID，是數字`,
+    `User (Author) ID, Numeric`,
+    `ユーザー（作者）の ID、数値`,
+    `사용자 (작가) ID, 숫자`,
+    `ID пользователя (автора), числовой`,
+  ],
+  _系列小说的命名标记_part: [
+    `如果小说的体积比较大，下载器可能会把它分割成多个文件，此时 {part} 是这个文件的编号，如 <span class="blue">1</span>、<span class="blue">2</span>、<span class="blue">3</span>…… 如果这个小说没有被分割，{part} 会被忽略。`,
+    `如果小說的體積比較大，下載器可能會把它分割成多個文件，此時 {part} 是這個文件的編號，如 <span class="blue">1</span>、<span class="blue">2</span>、<span class="blue">3</span>…… 如果這個小說沒有被分割，{part} 會被忽略。`,
+    `If the novel's size is relatively large, the downloader may split it into multiple files. In this case, {part} is the number of this file, such as <span class="blue">1</span>, <span class="blue">2</span>, <span class="blue">3</span>... If this novel is not split, {part} will be ignored.`,
+    `小説のサイズが比較的大きい場合、ダウンロードツールはそれを複数のファイルに分割する可能性があります。この場合、{part} はこのファイルの番号です（例: <span class="blue">1</span>、<span class="blue">2</span>、<span class="blue">3</span>...）。この小説が分割されていない場合、{part} は無視されます。`,
+    `소설의 크기가 비교적 크면 다운로더가 여러 파일로 분할할 수 있습니다. 이 경우 {part}는 이 파일의 번호로, <span class="blue">1</span>、<span class="blue">2</span>、<span class="blue">3</span>...과 같습니다. 이 소설이 분할되지 않은 경우, {part}는 무시됩니다.`,
+    `Если объем романа относительно велик, загрузчик может разделить его на несколько файлов. В этом случае {part} — это номер этого файла, например <span class="blue">1</span>, <span class="blue">2</span>, <span class="blue">3</span>... Если роман не разделен, {part} будет игнорироваться.`,
+  ],
+  _系列小说的命名标记_ext: [
+    `小说的保存格式，可能是 <span class="blue">txt</span> 或 <span class="blue">epub</span>`,
+    `小說的保存格式，可能是 <span class="blue">txt</span> 或 <span class="blue">epub</span>`,
+    `The save format for novels may be <span class="blue">txt</span> or <span class="blue">epub</span>`,
+    `小説の保存形式は <span class="blue">txt</span> または <span class="blue">epub</span> です`,
+    `소설의 저장 형식은 <span class="blue">txt</span> 또는 <span class="blue">epub</span>일 수 있습니다`,
+    `Формат сохранения романа может быть <span class="blue">txt</span> или <span class="blue">epub</span>`,
+  ],
+  _系列小说的命名标记_age: [
+    `这个系列的年龄限制，分为：<span class="blue">All Ages</span>、<span class="blue">R-18</span>、<span class="blue">R-18G</span>`,
+    `這個系列的年齡限制，分為：<span class="blue">All Ages</span>、<span class="blue">R-18</span>、<span class="blue">R-18G</span>`,
+    `The age restriction of this series is divided into: <span class="blue">All Ages</span>, <span class="blue">R-18</span>, <span class="blue">R-18G</span>`,
+    `このシリーズの年齢制限は、<span class="blue">All Ages</span>、<span class="blue">R-18</span>、<span class="blue">R-18G</span>に分かれます`,
+    `이 시리즈의 연령 제한은 <span class="blue">All Ages</span>、<span class="blue">R-18</span>、<span class="blue">R-18G</span>으로 나뉩니다`,
+    `Возрастное ограничение этой серии разделено на: <span class="blue">All Ages</span>, <span class="blue">R-18</span>, <span class="blue">R-18G</span>`,
+  ],
+  _系列小说的命名标记_age_r: [
+    `如果这个系列是限制级，则输出它的年龄限制，分为：<span class="blue">R-18</span>、<span class="blue">R-18G</span>，否则忽略这个标记。`,
+    `如果這個系列是限制級，則輸出它的年齡限制，分為：<span class="blue">R-18</span>、<span class="blue">R-18G</span>，否則忽略這個標記。`,
+    `If this series is restricted, output its age restriction, divided into: <span class="blue">R-18</span>, <span class="blue">R-18G</span>; otherwise, ignore this tag.`,
+    `このシリーズが制限級の場合、その年齢制限を出力：<span class="blue">R-18</span>、<span class="blue">R-18G</span>。それ以外の場合はこのタグを無視します。`,
+    `이 시리즈가 제한 등급이면 그 연령 제한을 출력：<span class="blue">R-18</span>、<span class="blue">R-18G</span>。그렇지 않으면 이 태그를 무시합니다。`,
+    `Если эта серия ограничена, выведите её возрастное ограничение, разделённое на: <span class="blue">R-18</span>, <span class="blue">R-18G</span>; в противном случае игнорируйте этот тег。`,
+  ],
+  _系列小说的命名标记_AI: [
+    `如果这个系列是 AI 生成的，则输出 <span class="blue">AI</span>，否则忽略这个标记。`,
+    `如果這個系列是 AI 生成的，則輸出 <span class="blue">AI</span>，否則忽略這個標記。`,
+    `If this series is AI-generated, output <span class="blue">AI</span>; otherwise, ignore this tag.`,
+    `このシリーズがAI生成の場合、<span class="blue">AI</span>を出力します。それ以外の場合はこのタグを無視します。`,
+    `이 시리즈가 AI 생성이라면 <span class="blue">AI</span>를 출력하며, 그렇지 않으면 이 태그를 무시합니다。`,
+    `Если эта серия сгенерирована ИИ, выведите <span class="blue">AI</span>; в противном случае игнорируйте этот тег。`,
+  ],
+  _系列小说的命名标记_lang: [
+    `这个系列的语言代码，例如 <span class="blue">zh-cn</span>、<span class="blue">ja</span>、<span class="blue">en</span> 等。注意：这并不总是准确的，因为有些作者没有设置正确的语言。`,
+    `這個系列的語言代碼，例如 <span class="blue">zh-cn</span>、<span class="blue">ja</span>、<span class="blue">en</span> 等。注意：這並不總是準確的，因為有些作者沒有設置正確的語言。`,
+    `The language code of this series, for example <span class="blue">zh-cn</span>, <span class="blue">ja</span>, <span class="blue">en</span>, etc. Note: This is not always accurate, because some authors have not set the correct language.`,
+    `このシリーズの言語コード、例：<span class="blue">zh-cn</span>、<span class="blue">ja</span>、<span class="blue">en</span> など。注意：これは常に正確ではなく、一部の作者が正しい言語を設定していないためです。`,
+    `이 시리즈의 언어 코드, 예: <span class="blue">zh-cn</span>、<span class="blue">ja</span>、<span class="blue">en</span> 등. 주의: 이는 항상 정확하지 않으며, 일부 작가가 올바른 언어를 설정하지 않았기 때문입니다.`,
+    `Код языка этой серии, например <span class="blue">zh-cn</span>, <span class="blue">ja</span>, <span class="blue">en</span> и т.д. Примечание: Это не всегда точно, поскольку некоторые авторы не установили правильный язык.`,
+  ],
+  _系列小说的命名标记_total: [
+    `这个系列里一共含有多少篇小说，是数字。`,
+    `這個系列裡一共含有多少篇小說，是數字。`,
+    `How many novels this series contains in total, it is a number.`,
+    `このシリーズに含まれる小説の総数は数字です。`,
+    `이 시리즈에 포함된 소설의 총 수는 숫자입니다。`,
+    `Общее количество романов в этой серии, это число.`,
+  ],
+  _系列小说的命名标记_char_count: [
+    `这个系列里所有小说的总字数，是数字。`,
+    `這個系列裡所有小說的總字數，是數字。`,
+    `The total word count of all novels in this series, it is a number.`,
+    `このシリーズ内のすべての小説の総文字数、数値です。`,
+    `이 시리즈의 모든 소설의 총 글자 수, 숫자입니다。`,
+    `Общее количество слов во всех романах этой серии, это число。`,
+  ],
+  _系列小说的命名标记_create_date: [
+    `这个系列的创建时间，例如 <span class="blue">2025-01-01</span>。`,
+    `這個系列的創建時間，例如 <span class="blue">2025-01-01</span>。`,
+    `The creation time of this series, for example <span class="blue">2025-01-01</span>.`,
+    `このシリーズの作成日時、例：<span class="blue">2025-01-01</span>。`,
+    `이 시리즈의 생성 시간, 예: <span class="blue">2025-01-01</span>。`,
+    `Время создания этой серии, например <span class="blue">2025-01-01</span>.`,
+  ],
+  _系列小说的命名标记_last_date: [
+    `这个系列里最新的一篇小说是何时添加的，例如 <span class="blue">2025-10-01</span>。`,
+    `這個系列裡最新的一篇小說是何時添加的，例如 <span class="blue">2025-10-01</span>。`,
+    `The date when the latest novel in this series was added, for example <span class="blue">2025-10-01</span>.`,
+    `このシリーズの最新の小説が追加された日付、例：<span class="blue">2025-10-01</span>。`,
+    `이 시리즈의 최신 소설이 추가된 날짜, 예: <span class="blue">2025-10-01</span>。`,
+    `Дата добавления последней новеллы в этой серии, например <span class="blue">2025-10-01</span>.`,
+  ],
+  _系列小说的命名标记_task_date: [
+    `下载器开始合并这个系列小说时的时间，例如 <span class="blue">2025-11-25</span>。`,
+    `下載器開始合併這個系列小說時的時間，例如 <span class="blue">2025-11-25</span>。`,
+    `The time when the downloader starts merging this novel series, for example <span class="blue">2025-11-25</span>.`,
+    `ダウンロードツールがこのシリーズ小説のマージを開始した時間、例：<span class="blue">2025-11-25</span>。`,
+    `다운로더가 이 시리즈 소설 병합을 시작한 시간, 예: <span class="blue">2025-11-25</span>。`,
+    `Время, когда загрузчик начинает объединение этой серии романов, например <span class="blue">2025-11-25</span>.`,
+  ],
+  _系列小说的命名标记_first_id: [
+    `这个系列里第一篇小说的 ID，是数字。`,
+    `這個系列裡第一篇小說的 ID，是數字。`,
+    `The ID of the first novel in this series, it is a number.`,
+    `このシリーズの最初の小説の ID、数値です。`,
+    `이 시리즈의 첫 번째 소설의 ID, 숫자입니다。`,
+    `ID первого романа в этой серии, это число。`,
+  ],
+  _系列小说的命名标记_latest_id: [
+    `这个系列里最后一篇小说的 ID，是数字。`,
+    `這個系列裡最後一篇小說的 ID，是數字。`,
+    `The ID of the last novel in this series, it is a number.`,
+    `このシリーズの最後の小説の ID、数値です。`,
+    `이 시리즈의 마지막 소설의 ID, 숫자입니다。`,
+    `ID последнего романа в этой серии, это число。`,
+  ],
+  _系列小说的命名标记_tags: [
+    `这个系列小说的标签列表。注意这是系列的标签，而非系列里每一篇小说的标签。`,
+    `這個系列小說的標籤列表。注意這是系列的標籤，而非系列裡每一篇小說的標籤。`,
+    `The tag list of this novel series. Note that these are the series' tags, not the tags of each novel in the series.`,
+    `このシリーズ小説のタグリスト。これはシリーズのタグであり、シリーズ内の各小説のタグではありません。`,
+    `이 시리즈 소설의 태그 목록. 이는 시리즈의 태그이며, 시리즈 내 각 소설의 태그가 아닙니다.`,
+    `Список тегов этой серии романов. Обратите внимание, что это теги серии, а не теги каждого романа в серии.`,
+  ],
+  _系列小说的命名标记_page_title: [
+    `当前页面的标题`,
+    `當前頁面的標題`,
+    `Title of the current page`,
+    `現在のページのタイトル`,
+    `현재 페이지의 제목`,
+    `Заголовок текущей страницы`,
+  ],
+  _过滤搜索页面的作品: [
+    `<span class="key">过滤</span>搜索页面的作品`,
+    `<span class="key">過濾</span>搜尋頁面的作品`,
+    `<span class="key">Filter</span> works on the search page`,
+    `<span class="key">フィルタリング</span>検索ページの作品`,
+    `<span class="key">필터링</span> 검색 페이지의 작품`,
+    `<span class="key">Фильтрация</span> работ на странице поиска`,
+  ],
+  _过滤搜索页面的作品的说明: [
+    `当你启用此功能后，下载器会在搜索页面里拦截 Pixiv 的请求，在作品显示之前就应用过滤器，移除不符合条件的作品。这样，只有符合条件的作品会显示出来。
+    <br>
+    <br>
+    <strong>注意事项：</strong>
+    <br>
+    - 当你启用此功能、以及修改过滤条件后，页面上显示的作品不会变化，这是正常的，因为它们已经显示出来了。这个功能是通过拦截请求实现的，所以之后发起的请求才会应用你的修改，所以你在翻页、刷新时可以看到修改的效果。
+    <br>
+    - 由于作品列表的数据里不包含收藏数量，所以下载器不能使用收藏数量来过滤作品。收藏数量条件会被忽略。
+    <br>
+    - 启用此功能时，请谨慎使用“图片色彩”过滤器。如果只选择了一种颜色（也就是需要判断图片的色彩），下载器需要加载所有作品的缩略图来判断颜色，这会产生大量请求，而且也会花费比较多的时间（过滤可能需要超过 2 秒钟）。`,
+    `當你啟用此功能後，下載器會在搜尋頁面裡攔截 Pixiv 的請求，在作品顯示之前就應用過濾器，移除不符合條件的作品。這樣，只有符合條件的作品會顯示出來。
+    <br>
+    <br>
+    <strong>注意事項：</strong>
+    <br>
+    - 當你啟用此功能、以及修改過濾條件後，頁面上顯示的作品不會變化，這是正常的，因為它們已經顯示出來了。這個功能是通過攔截請求實現的，所以之後發起的請求才會應用你的修改，所以你在翻頁、刷新時可以看到修改的效果。
+    <br>
+    - 由於作品列表的資料裡不包含收藏數量，所以下載器不能使用收藏數量來過濾作品。收藏數量條件會被忽略。
+    <br>
+    - 啟用此功能時，請謹慎使用「圖片色彩」過濾器。如果只選擇了一種顏色（也就是需要判斷圖片的色彩），下載器需要載入所有作品的縮略圖來判斷顏色，這會產生大量請求，而且也會花費比較多的時間（過濾可能需要超過 2 秒鐘）。`,
+    `After you enable this feature, the downloader will intercept Pixiv's requests on the search page and apply the filter before the works are displayed, removing works that do not meet the conditions. This way, only works that meet the conditions will be displayed.
+    <br>
+    <br>
+    <strong>Notes:</strong>
+    <br>
+    - After you enable this feature or modify the filter conditions, the works displayed on the page will not change; this is normal because they have already been displayed. This feature is implemented by intercepting requests, so subsequent requests will apply your changes. Therefore, you can see the effect of the changes when you turn the page or refresh.
+    <br>
+    - Since the work list data does not include the bookmark count, the downloader cannot use the bookmark count to filter works. The bookmark count condition will be ignored.
+    <br>
+    - When enabling this feature, please use the "Image Color" filter with caution. If only one color is selected (which means judging the color of the image), the downloader needs to load thumbnails of all works to determine the color, which will generate a large number of requests and also take more time (filtering may take more than 2 seconds).`,
+    `この機能を有効にすると、ダウンロードツールは検索ページでPixivのリクエストを傍受し、作品が表示される前にフィルターを適用して条件に合わない作品を削除します。これにより、条件に合った作品のみが表示されます。
+    <br>
+    <br>
+    <strong>注意事項：</strong>
+    <br>
+    - この機能を有効にしたり、フィルター条件を変更した後、ページに表示されている作品は変更されません。これは正常です。なぜなら、それらはすでに表示されているからです。この機能はリクエストの傍受によって実装されているため、後続のリクエストにのみ変更が適用されます。したがって、ページをめくるか更新すると変更の効果が見られます。
+    <br>
+    - 作品リストのデータにブックマーク数を含まないため、ダウンロードツールはブックマーク数で作品をフィルタリングできません。ブックマーク数の条件は無視されます。
+    <br>
+    - この機能を有効にする際は、「画像色」フィルターを慎重に使用してください。1つの色のみを選択した場合（画像の色を判断する必要がある場合）、ダウンロードツールはすべての作品のサムネイルをロードして色を判断する必要があります。これにより大量のリクエストが発生し、時間もかかります（フィルタリングに2秒以上かかる可能性があります）。`,
+    `이 기능을 활성화한 후, 다운로더는 검색 페이지에서 Pixiv의 요청을 차단하고 작품이 표시되기 전에 필터를 적용하여 조건을 충족하지 않는 작품을 제거합니다. 이렇게 하면 조건을 충족하는 작품만 표시됩니다.
+    <br>
+    <br>
+    <strong>주의사항:</strong>
+    <br>
+    - 이 기능을 활성화하거나 필터 조건을 수정한 후 페이지에 표시된 작품은 변경되지 않습니다. 이는 정상입니다. 왜냐하면 이미 표시되었기 때문입니다. 이 기능은 요청 차단을 통해 구현되므로 후속 요청에만 변경 사항이 적용됩니다. 따라서 페이지를 넘기거나 새로고침할 때 변경 효과를 볼 수 있습니다.
+    <br>
+    - 작품 목록 데이터에 북마크 수가 포함되지 않으므로 다운로더는 북마크 수를 사용하여 작품을 필터링할 수 없습니다. 북마크 수 조건은 무시됩니다.
+    <br>
+    - 이 기능을 활성화할 때 "이미지 색상" 필터를 신중하게 사용하십시오. 한 가지 색상만 선택한 경우(이미지의 색상을 판단해야 하는 경우), 다운로더는 모든 작품의 썸네일을 로드하여 색상을 판단해야 하며, 이는 대량의 요청을 생성하고 더 많은 시간을 소비합니다(필터링에 2초 이상 걸릴 수 있습니다).`,
+    `После активации этой функции загрузчик будет перехватывать запросы Pixiv на странице поиска и применять фильтр до отображения работ, удаляя те, которые не соответствуют условиям. Таким образом, будут отображаться только работы, соответствующие условиям.
+    <br>
+    <br>
+    <strong>Примечания:</strong>
+    <br>
+    - После активации этой функции или изменения условий фильтрации отображаемые на странице работы не изменятся; это нормально, поскольку они уже отображены. Эта функция реализована путем перехвата запросов, поэтому изменения применяются только к последующим запросам. Поэтому вы увидите эффект изменений при перелистывании страниц или обновлении.
+    <br>
+    - Поскольку данные списка работ не включают количество закладок, загрузчик не может использовать количество закладок для фильтрации работ. Условие по количеству закладок будет игнорироваться.
+    <br>
+    - При активации этой функции используйте фильтр "Цвет изображения" с осторожностью. Если выбран только один цвет (т.е. требуется определить цвет изображения), загрузчику нужно загрузить миниатюры всех работ для определения цвета, что сгенерирует большое количество запросов и займет больше времени (фильтрация может занять более 2 секунд).`,
+  ],
 }
 
 export { langText }
@@ -6956,6 +7524,7 @@ export { langText }
 // - 如果中文语句里有 html 标签，翻译时需要原样保留。
 // - 如果原语句里有 `<span class="key">关键字</span>` 形式的标记，那么在翻译后的语句里也要加上。
 // - 中文的引号如 `“` 和 `”` 都翻译成英语的引号 `"`。
+// - 如果原语句使用了 \n 来换行（这是为了区分每条子语句），在翻译时需要保持换行格式（而非把多行文字合并到一行）。
 
 // 术语表：
 // - `作品`（指 pixiv 上的投稿）翻译为`work`。

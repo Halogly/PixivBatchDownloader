@@ -13,7 +13,7 @@ import { progressBar } from './ProgressBar'
 import { filter } from '../filter/Filter'
 import { downloadRecord } from './DownloadRecord'
 import { settings } from '../setting/Settings'
-import { MakeNovelFile } from './MakeNovelFile'
+import { makeNovelFile } from './MakeNovelFile'
 import { Utils } from '../utils/Utils'
 import { Config } from '../Config'
 import { msgBox } from '../MsgBox'
@@ -146,7 +146,7 @@ class Download {
       Tools.createWorkLink(fileId),
       status.toString()
     )
-    // 404, 500 错误，跳过，不会再尝试下载这个文件（因为没有触发 downloadError 事件，所以不会重试下载）
+    // 发生 404 500 错误时跳过这个作品。因为没有触发 downloadError 事件，所以不会重试下载它
     if (status === 404 || status === 500) {
       log.error(errorMsg)
       log.error(lang.transl('_下载器不会再重试下载它'))
@@ -194,13 +194,13 @@ class Download {
       if (arg.result.novelMeta) {
         // 生成小说文件
         if (settings.novelSaveAs === 'epub') {
-          const blob: Blob = await MakeNovelFile.makeEPUB(
+          const blob = await makeNovelFile.makeEPUB(
             arg.result.novelMeta,
             _fileName
           )
           url = URL.createObjectURL(blob)
         } else {
-          const blob: Blob = await MakeNovelFile.makeTXT(
+          const blob = await makeNovelFile.makeTXT(
             arg.result.novelMeta,
             _fileName
           )
@@ -286,7 +286,7 @@ class Download {
         // 状态码正常
         progressBar.errorColor(this.progressBarIndex, false)
         // 需要转换动图的情况
-        const convertExt = ['webm', 'gif', 'png']
+        const convertExt = ['webm', 'gif', 'apng']
         const ext = settings.ugoiraSaveAs
         if (
           convertExt.includes(ext) &&
@@ -311,7 +311,7 @@ class Download {
               )
             }
 
-            if (ext === 'png') {
+            if (ext === 'apng') {
               file = await convertUgoira.apng(
                 file,
                 arg.result.ugoiraInfo,

@@ -695,6 +695,17 @@ body.mobile #quickCrawlBtn {
   line-height: 26px;
   flex-shrink: 0;
 }
+.centerWrap .centerWrap_con .settingForm p.option .rowWrap {
+  display: flex;
+  flex-basis: 100%;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  justify-content: center;
+}
+.centerWrap .centerWrap_con .settingForm p.option .rowWrap button,
+.centerWrap .centerWrap_con .settingForm p.option .rowWrap .textButton {
+  flex-shrink: 0;
+}
 .centerWrap .centerWrap_con .settingForm p.option .beautify_switch,
 .centerWrap .centerWrap_con .settingForm p.option .beautify_checkbox {
   margin: 6px 0;
@@ -980,6 +991,9 @@ body.mobile #quickCrawlBtn {
 .centerWrap .centerWrap_con .settingForm .fileNameTip {
   display: none;
   padding-top: 5px;
+}
+.centerWrap .centerWrap_con .settingForm .namingTipArea .name {
+  cursor: pointer;
 }
 .centerWrap .centerWrap_con .settingForm .centerWrap_btns {
   padding: 8px 0 0;
@@ -1595,14 +1609,15 @@ body.mobile #quickCrawlBtn {
   display: none;
   color: #333;
   background: #fff;
+  padding: 10px 0px;
 }
 .logContent {
-  width: 100%;
+  width: 96vw;
   max-width: 950px;
   max-height: 300px;
   overflow-y: scroll;
   margin: 0 auto;
-  padding: 10px 20px;
+  margin-bottom: 20px;
   font-size: 14px;
 }
 .logContent span {
@@ -2642,7 +2657,7 @@ iframe[name='expandedFooter'] {
   color: #f00;
 }
 .green {
-  color: #14ad27;
+  color: #00bd17;
 }
 .icon {
   width: 1em;

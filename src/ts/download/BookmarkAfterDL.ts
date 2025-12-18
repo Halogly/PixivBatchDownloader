@@ -56,6 +56,7 @@ class BookmarkAfterDL {
     })
 
     window.addEventListener(EVT.list.downloadComplete, () => {
+      this.showCompleteLog = true
       this.delayReset = true
     })
 
@@ -67,7 +68,10 @@ class BookmarkAfterDL {
     })
   }
 
-  private showCompleteTip = true
+  /** 当所有的收藏任务都完成后，显示一条日志 */
+  // 只有当所有文件都下载完毕后才会显示这条日志
+  private showCompleteLog = false
+
   private showProgress() {
     if (this.IDList.length === 0) {
       lang.updateText(this.tipEl, '')
@@ -79,17 +83,20 @@ class BookmarkAfterDL {
       `${this.successCount}/${this.IDList.length}`
     )
 
-    if (this.successCount === this.IDList.length && this.showCompleteTip) {
-      // 当全部收藏完成时，只显示一次提示。否则会显示多次
-      this.showCompleteTip = false
-      log.success(lang.transl('_收藏作品完毕'))
+    if (
+      this.showCompleteLog &&
+      this.successCount > 0 &&
+      this.successCount === this.IDList.length
+    ) {
+      this.showCompleteLog = false
+      log.success('♥️' + lang.transl('_收藏作品完毕'))
     }
   }
 
   private reset() {
-    this.showCompleteTip = true
     this.IDList = []
     this.queue = []
+    this.showCompleteLog = false
     this.successCount = 0
     this.tipEl.classList.remove('red')
     this.tipEl.classList.add('green')
@@ -148,6 +155,7 @@ class BookmarkAfterDL {
 
     // 添加收藏
     // 当抓取结果很少时，不使用慢速收藏
+    // 如果抓取结果大于 30 个，则使用慢速收藏1
     const status = await bookmark.add(
       id.toString(),
       data.type !== 3 ? 'illusts' : 'novels',
@@ -157,28 +165,22 @@ class BookmarkAfterDL {
       store.result.length > 30
     )
 
-    this.successCount++
-    // 已完成的数量不应该超过任务总数
-    // 特定情况下会导致已完成数量比任务总数多 1，需要修正。原因如下：
-    // 在下载完毕后，收藏尚未完毕（例如进度为 18/48)，并且第 19 个收藏任务已经发送给了 bookmark.add
-    // 在这个收藏任务完成前，用户点击开始下载按钮开始了新一批下载任务，导致执行了 reset
-    // successCount 会重置为 0
-    // 但之后遗留的 bookmark.add 执行完毕，在这里导致 successCount + 1
-    // 这会使已完成数量比开始下载后的新的任务数量多 1，所以需要进行检查，以避免这种情况
-    if (this.successCount > this.IDList.length) {
-      this.successCount = this.IDList.length
+    if (status === 200) {
+      this.successCount++
+      // 已完成的数量不应该超过任务总数
+      // 特定情况下会导致已完成数量比任务总数多 1，需要修正。原因如下：
+      // 在下载完毕后，收藏尚未完毕（例如进度为 18/48)，并且第 19 个收藏任务已经发送给了 bookmark.add
+      // 在这个收藏任务完成前，用户点击开始下载按钮开始了新一批下载任务，导致执行了 reset
+      // successCount 会重置为 0
+      // 但之后遗留的 bookmark.add 执行完毕，在这里导致 successCount + 1
+      // 这会使已完成数量比开始下载后的新的任务数量多 1，所以需要进行检查，以避免这种情况
+      if (this.successCount > this.IDList.length) {
+        this.successCount = this.IDList.length
+      }
+      this.showProgress()
     }
-    this.showProgress()
+
     this.busy = false
-
-    if (status === 403) {
-      log.error(
-        `Add bookmark: ${id}, Error: 403 Forbidden, ${lang.transl(
-          '_你的账号已经被Pixiv限制'
-        )}`
-      )
-    }
-
     return this.check()
   }
 }

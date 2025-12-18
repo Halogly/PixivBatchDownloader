@@ -117,6 +117,7 @@ export interface NovelMeta {
   description: string
   coverUrl: string
   createDate: string
+  uploadDate: string
   userName: string
   /**嵌入的图片 id 以及其原图 URL。例如：
    *
@@ -125,7 +126,6 @@ export interface NovelMeta {
   embeddedImages: null | {
     [key: string]: string
   }
-  meta: string
   tags: string[]
 }
 

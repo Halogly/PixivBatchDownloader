@@ -461,6 +461,10 @@ class Utils {
 
   // textarea.value 不会转换 <br /> 等 html 标记
   static htmlDecode(str: string) {
+    if (!str) {
+      return ''
+    }
+
     const textarea = document.createElement('textarea')
     textarea.innerHTML = str
     return textarea.value
@@ -534,6 +538,21 @@ class Utils {
       }
       reader.readAsDataURL(blob)
     })
+  }
+
+  static async writeClipboardText(text: string) {
+    try {
+      await window.navigator.clipboard.writeText(text)
+      return true
+    } catch (error: Error | any) {
+      console.error('Writing to clipboard failed', error.message)
+      return false
+    }
+  }
+
+  /** 检测字符串是否全部为 ASCII 字符 */
+  static isAscii(str: string) {
+    return /^[\x00-\x7F]*$/.test(str)
   }
 }
 

@@ -4,10 +4,8 @@ import { Colors } from '../Colors'
 import { store } from '../store/Store'
 import { Tools } from '../Tools'
 import { API } from '../API'
-import { states } from '../store/States'
-import { settings } from '../setting/Settings'
-import { getNovelGlossarys } from './GetNovelGlossarys'
 import { Utils } from '../utils/Utils'
+import { MergeNovel } from '../download/MergeNovel'
 
 class InitNovelSeriesPage extends InitPageBase {
   constructor() {
@@ -15,7 +13,6 @@ class InitNovelSeriesPage extends InitPageBase {
     this.init()
   }
 
-  private seriesId: string = ''
   private readonly limit = 30
   private last = 0
 
@@ -39,29 +36,25 @@ class InitNovelSeriesPage extends InitPageBase {
       '',
       'mergeSeriesNovel'
     ).addEventListener('click', () => {
-      states.mergeNovel = true
-      this.readyCrawl()
+      const seriesId = Utils.getURLPathField(window.location.pathname, 'series')
+      let seriseTitle = ''
+      // 尝试获取系列标题
+      const meta = document.querySelector('meta[property="twitter:title"]')
+      if (meta) {
+        seriseTitle = meta.getAttribute('content') || ''
+      }
+      new MergeNovel().merge(seriesId, seriseTitle)
     })
   }
 
-  protected initAny() {}
-
-  protected getWantPage() {}
-
   protected async nextStep() {
-    this.seriesId = Utils.getURLPathField(window.location.pathname, 'series')
-
-    if (states.mergeNovel && settings.saveNovelMeta) {
-      const data = await getNovelGlossarys.getGlossarys(this.seriesId)
-      store.novelSeriesGlossary = getNovelGlossarys.storeGlossaryText(data)
-    }
-
     this.getIdList()
   }
 
   protected async getIdList() {
+    const seriesId = Utils.getURLPathField(window.location.pathname, 'series')
     const seriesData = await API.getNovelSeriesContent(
-      this.seriesId,
+      seriesId,
       this.limit,
       this.last,
       'asc'
@@ -86,8 +79,8 @@ class InitNovelSeriesPage extends InitPageBase {
   }
 
   protected resetGetIdListStatus() {
-    this.seriesId = ''
     this.last = 0
   }
 }
+
 export { InitNovelSeriesPage }

@@ -4,7 +4,7 @@ import { ArtworkData, NovelData } from './crawl/CrawlResult'
 import { lang } from './Language'
 import { pageType } from './PageType'
 import { wiki } from './setting/Wiki'
-import { WorkTypeString, Result } from './store/StoreType'
+import { WorkTypeString, Result, IDData } from './store/StoreType'
 import { Utils } from './utils/Utils'
 
 type artworkDataTagsItem = {
@@ -566,7 +566,11 @@ class Tools {
   }
 
   // 传入作品 id，生成作品页面的超链接
-  static createWorkLink(id: number | string, title?: string, artwork = true) {
+  static createWorkLink(
+    id: number | string,
+    title?: string,
+    type: 'artwork' | 'novel' = 'artwork'
+  ) {
     // 对于图像作品，在作品页面链接后面添加 #p+1 可以在打开页面后，定位到对应的图片
     const array = id.toString().split('_p')
     const idNum = array[0]
@@ -577,7 +581,7 @@ class Tools {
       p = Number.parseInt(array[1]) + 1
     }
 
-    const href = `https://www.pixiv.net/${artwork ? 'i' : 'n'}/${idNum}${
+    const href = `https://www.pixiv.net/${type === 'artwork' ? 'i' : 'n'}/${idNum}${
       hasP ? `#${p}` : ''
     }`
     return `<a href="${href}" target="_blank">${title || id}</a>`
@@ -642,6 +646,69 @@ class Tools {
     return str
   }
 
+  /** 从小说数据里提取嵌入的图片资源 **/
+  static extractEmbeddedImages(data: NovelData) {
+    let imags: null | {
+      [key: string]: string
+    } = null
+    if (data.body.textEmbeddedImages) {
+      imags = {}
+      for (const [id, value] of Object.entries(data.body.textEmbeddedImages)) {
+        imags[id] = value.urls.original
+      }
+    }
+    return imags
+  }
+
+  /**对小说正文里的一些标记进行替换 */
+  static replaceNovelContentFlag(str: string) {
+    str = this.replaceJumpuri(str)
+    str = str.replace(/\[jump:.*?\]/g, '')
+    str = this.replaceRb(str)
+    str = this.replaceChapter(str)
+    return str
+  }
+
+  // '[[jumpuri:予約ページ>https://www.amazon.co.jp/dp/4758092486]]'
+  // 替换成
+  // '予約ページ（https://www.amazon.co.jp/dp/4758092486）'
+  static replaceJumpuri(str: string) {
+    let reg = /\[\[jumpuri:(.*?)>(.*?)\]\]/g
+    let temp
+    while ((temp = reg.exec(str))) {
+      str = str.replace(temp[0], `${temp[1].trim()}（${temp[2].trim()}）`)
+      reg.lastIndex = 0
+    }
+
+    return str
+  }
+
+  // > '[[rb:莉莉丝 > Lilith]]'
+  // 替换成
+  // '莉莉丝（Lilith）'
+  static replaceRb(str: string) {
+    let reg = /\[\[rb:(.*?)>(.*?)\]\]/g
+    let temp
+    while ((temp = reg.exec(str))) {
+      str = str.replace(temp[0], `${temp[1].trim()}（${temp[2].trim()}）`)
+      reg.lastIndex = 0
+    }
+    return str
+  }
+
+  // > '[chapter:标题]'
+  // 替换成
+  // '标题'
+  static replaceChapter(str: string) {
+    const reg = /\[chapter:(.*?)\]/g
+    let temp
+    while ((temp = reg.exec(str))) {
+      str = str.replace(temp[0], temp[1])
+      reg.lastIndex = 0
+    }
+    return str
+  }
+
   /**替换 EPUB 文本里的特殊字符和换行符 */
   // 换行符必须放在最后处理，以免其 < 符号被替换
   // 把所有换行符统一成 <br/>（包括 \n）
@@ -656,9 +723,11 @@ class Tools {
       .replace(/\n/g, '<br/>')
   }
 
-  // 把所有换行符统一成 <br/>（包括 \n）
-  // 之后统一替换为 <p> 与 </p>，以对应 EPUB 文本惯例
+  /**把所有换行符统一成 <br/>（包括 \n）, 之后统一替换为 <p> 与 </p>，以对应 EPUB 文本惯例 */
   static replaceEPUBTextWithP(str: string) {
+    if (!str) {
+      return ''
+    }
     return (
       '<p>' +
       str
@@ -867,6 +936,7 @@ class Tools {
     }
   }
 
+  /** 储存 Pixiv 每种显示语言里，“AI 生成”标记所使用的文字 */
   static readonly AIMark: Map<string, string> = new Map([
     ['zh-cn', 'AI生成'],
     ['zh-tw', 'AI生成'],
@@ -874,6 +944,8 @@ class Tools {
     ['ja', 'AI生成'],
     ['ko', 'AI 생성'],
     ['ru', 'сгенерированный ИИ'],
+    ['th', 'สร้างโดย AI'],
+    ['ms', 'Janaan AI'],
   ])
 
   /**如果一个作品是 AI 生成的，则返回特定的字符串标记
@@ -882,7 +954,7 @@ class Tools {
    */
   static getAIGeneratedMark(aiType?: 0 | 1 | 2) {
     if (aiType === 2) {
-      return this.AIMark.get(lang.htmlLangType)
+      return this.AIMark.get(lang.htmlLangType) || 'AI-generated'
     }
     return ''
   }
@@ -960,6 +1032,25 @@ class Tools {
       'a[href^="/premium/lead/lp/"]'
     ) as NodeListOf<HTMLAnchorElement>
     ads.forEach((ad) => (ad.style.display = 'none'))
+  }
+
+  /** 当添加收藏失败且状态码为 403 时，显示特定提示。由于有多个模块需要使用此提示，所以提取出来 */
+  static addBookmark403Error() {
+    return `${lang.transl('_添加收藏失败')}, ${lang.transl('_状态码')}: 403 Forbidden
+            <br>
+            ${lang.transl('_你的账号可能已经被限制无法添加收藏')}`
+  }
+
+  /** 把 xRestrict 的值转换为对应的字符串 */
+  static getAgeLimit(xRestrict: 0 | 1 | 2, handleAll = true) {
+    switch (xRestrict) {
+      case 0:
+        return handleAll ? 'All Ages' : ''
+      case 1:
+        return 'R-18'
+      case 2:
+        return 'R-18G'
+    }
   }
 }
 

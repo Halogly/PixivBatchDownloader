@@ -23,7 +23,6 @@ import { msgBox } from '../MsgBox'
 import { Utils } from '../utils/Utils'
 import { pageType } from '../PageType'
 import { filter } from '../filter/Filter'
-import { Config } from '../Config'
 import { timedCrawl } from './TimedCrawl'
 import '../pageFunciton/QuickBookmark'
 import '../pageFunciton/CopyButtonOnWorkPage'
@@ -31,6 +30,7 @@ import '../pageFunciton/DisplayThumbnailListOnMultiImageWorkPage'
 import { setTimeoutWorker } from '../SetTimeoutWorker'
 import { cacheWorkData } from '../store/CacheWorkData'
 import { crawlLatestFewWorks } from './CrawlLatestFewWorks'
+import { autoMergeNovel } from '../download/AutoMergeNovel'
 
 abstract class InitPageBase {
   protected crawlNumber = 0 // 要抓取的个数/页数
@@ -71,8 +71,6 @@ abstract class InitPageBase {
             log.warning(lang.transl('_慢速抓取'))
             states.slowCrawlMode = true
             this.ajaxThread = 1
-            // 其实在已经出现 429 错误后，用户才启用这个开关的话是没用的，
-            // 因为下载器重试请求的时候，已经有多个出错的请求了，下载器没有把这些请求从并发改为单线程
           }
         }
       }
@@ -156,6 +154,10 @@ abstract class InitPageBase {
     ) {
       log.warning(lang.transl('_在搜索页面里移除已关注用户的作品'))
     }
+
+    if (settings.autoMergeNovel) {
+      log.warning(lang.transl('_自动合并系列小说'))
+    }
   }
 
   protected setSlowCrawl() {
@@ -194,7 +196,7 @@ abstract class InitPageBase {
 
     EVT.fire('clearLog')
 
-    log.success(lang.transl('_开始抓取'))
+    log.success('🚀' + lang.transl('_开始抓取'))
     toast.show(lang.transl('_开始抓取'), {
       position: 'center',
     })
@@ -251,7 +253,7 @@ abstract class InitPageBase {
 
       EVT.fire('clearLog')
 
-      log.success(lang.transl('_开始抓取'))
+      log.success('🚀' + lang.transl('_开始抓取'))
       toast.show(lang.transl('_开始抓取'), {
         bgColor: Colors.bgBlue,
       })
@@ -347,8 +349,8 @@ abstract class InitPageBase {
           )
         }
 
-        const msg = '✓ ' + lang.transl('_导出ID列表')
-        log.success(msg)
+        const msg = lang.transl('_导出ID列表')
+        log.success('✅' + msg)
         toast.success(msg)
       }
 
@@ -402,13 +404,6 @@ abstract class InitPageBase {
   // 重设抓取作品列表时使用的变量或标记
   protected resetGetIdListStatus() {}
 
-  protected log429ErrorTip = Utils.debounce(() => {
-    log.error(lang.transl('_抓取被限制时返回空结果的提示'))
-    if (!settings.slowCrawl) {
-      log.error(lang.transl('_提示启用减慢抓取速度功能'))
-    }
-  }, 500)
-
   // 获取作品的数据
   protected async getWorksData(idData?: IDData): Promise<void> {
     if (states.stopCrawl) {
@@ -444,12 +439,30 @@ abstract class InitPageBase {
 
     try {
       const unlisted = pageType.type === pageType.list.Unlisted
-      // 这里不使用 cacheWorkData中的缓存数据，因为某些数据（如作品的收藏状态）可能已经发生变化
       if (idData.type === 'novels') {
-        const data = await API.getNovelData(id, unlisted)
-        await saveNovelData.save(data)
+        // 小说数据尝试从缓存中获取，这是因为“自动合并系列小说”里也需要获取小说数据。
+        // 如果不使用缓存，则必定会导致一个小说发送两次请求
+        // 使用缓存有负面影响：作品的某些数据（如收藏数量）在它被缓存之后可能已经发生变化
+        // 但通常问题不大
+        let data = cacheWorkData.get(id, 'novel')
+        if (!data) {
+          data = await API.getNovelData(id, unlisted)
+          cacheWorkData.set(data)
+        }
+        // 自动合并系列小说
+        const seriesId = data.body.seriesNavData?.seriesId
+        const canMerge = seriesId && settings.autoMergeNovel
+        if (canMerge) {
+          const seriseTitle = data.body.seriesNavData?.title
+          await autoMergeNovel.merge(seriesId, seriseTitle)
+        }
+        // 如果这个小说不会被合并，或者即使合并也不跳过它，则保存到抓取结果里
+        if (!canMerge || !settings.skipNovelsInSeriesWhenAutoMerge) {
+          await saveNovelData.save(data)
+        }
         this.afterGetWorksData(data)
       } else {
+        // 获取图像作品时，不使用缓存的数据，因为目前在一次抓取里不会重复请求同一个图像作品
         const data = await API.getArtworkData(id, unlisted)
         await saveArtworkData.save(data)
         this.afterGetWorksData(data)
@@ -458,23 +471,14 @@ abstract class InitPageBase {
       // 当 API 里的网络请求的状态码异常时，会 reject，被这里捕获
       if (error.status) {
         // 请求成功，但状态码不正常
-        this.logErrorStatus(error.status, idData)
-        if (error.status === 500 || error.status === 429) {
-          // 如果状态码 500 或 429，获取不到作品数据，可能是被 pixiv 限制了，等待一段时间后再次发送这个请求
-          this.log429ErrorTip()
-          window.setTimeout(() => {
-            this.getWorksData(idData)
-          }, Config.retryTime)
-          return
-        } else {
-          this.afterGetWorksData()
-        }
+        // 不重试
+        this.afterGetWorksData()
       } else {
         // 请求失败，一般是
         // TypeError: Failed to fetch
         // 或者 Failed to load resource: net::ERR_CONNECTION_CLOSED
         // 对于这种请求没能成功发送的错误，会输出 null
-        // 此外这里也会捕获到 save 作品数据时的错误（如果有）
+        // 注意：这里也会捕获到 save 作品数据时的错误（如果有）
         console.error(error)
 
         // 再次发送这个请求
@@ -522,6 +526,17 @@ abstract class InitPageBase {
 
     // 如果存在下一个作品，则继续抓取
     if (store.idList.length > 0) {
+      // 如果下一个作品是小说，先检查缓存里是否有它的数据
+      // 如果有缓存数据就不需要添加间隔时间，因为小说会使用缓存的数据，不必发送请求
+      const nextIDData = store.idList[0]
+      if (nextIDData && nextIDData.type === 'novels') {
+        const cache = cacheWorkData.get(nextIDData.id, 'novel')
+        if (cache) {
+          return this.getWorksData()
+        }
+      }
+
+      // 如果要实际发送请求，则根据慢速抓取设置，决定是否添加间隔时间
       if (states.slowCrawlMode) {
         setTimeoutWorker.set(() => {
           this.getWorksData()
@@ -541,8 +556,8 @@ abstract class InitPageBase {
 
   // 抓取完毕
   protected crawlFinished() {
-    // 当下载器没有处于慢速抓取模式时，会使用 10 个并发请求
-    // 此时如果第一个请求触发了停止抓取 states.stopCrawl，这 10 个都会进入这里
+    // 当下载器没有处于慢速抓取模式时，会使用并发请求（例如同时发送 3 个请求）
+    // 此时如果第一个请求触发了停止抓取 states.stopCrawl，这些并发请求都会进入这里
     // 所以我设置了个一次性的标记，防止重复执行这里的代码
     if (this.crawlFinishBecauseStopCrawl) {
       return
@@ -584,7 +599,7 @@ abstract class InitPageBase {
 
     log.log(lang.transl('_共抓取到n个文件', store.result.length.toString()))
 
-    log.success(lang.transl('_抓取完毕'), 2)
+    log.success('✅' + lang.transl('_抓取完毕'), 2)
 
     // 发出抓取完毕的信号
     EVT.fire('crawlComplete')
@@ -603,53 +618,10 @@ abstract class InitPageBase {
     }
   }
 
-  // 网络请求状态异常时输出提示
-  private logErrorStatus(status: number, idData: IDData) {
-    const isNovel = idData.type === 'novels'
-    const workLink = Tools.createWorkLink(idData.id, '', !isNovel)
-    switch (status) {
-      case 0:
-        log.error(workLink + ' ' + lang.transl('_作品页状态码0'))
-        break
-
-      case 400:
-        log.error(workLink + ' ' + lang.transl('_作品页状态码400'))
-        break
-
-      case 401:
-        log.error(
-          workLink + ' ' + lang.transl('_请您登录Pixiv账号然后重试_401')
-        )
-        break
-
-      case 403:
-        log.error(workLink + ' ' + lang.transl('_作品页状态码403'))
-        break
-
-      case 404:
-        log.error(workLink + ' ' + lang.transl('_作品页状态码404'))
-        break
-
-      case 429:
-        log.error(workLink + ' ' + lang.transl('_作品页状态码429'))
-        break
-
-      case 500:
-        log.error(workLink + ' ' + lang.transl('_作品页状态码500'))
-        break
-
-      default:
-        log.error(
-          lang.transl('_无权访问', workLink) + `HTTP status code: ${status}`
-        )
-        break
-    }
-  }
-
   // 每当抓取了一个作品之后，输出提示
   protected logResultNumber() {
     log.log(
-      `${lang.transl('_待处理')} ${store.idList.length}, ${lang.transl(
+      `➡️${lang.transl('_抓取进度')}: ${lang.transl('_待处理')} ${store.idList.length}, ${lang.transl(
         '_共抓取到n个作品',
         store.resultMeta.length.toString()
       )}`,
@@ -664,7 +636,16 @@ abstract class InitPageBase {
     // 如果触发顺序反过来，那么最后执行的都是 crawlComplete，可能会覆盖对 crawlEmpty 的处理
     EVT.fire('crawlComplete')
     EVT.fire('crawlEmpty')
-    const msg = lang.transl('_抓取结果为零')
+
+    let msg = lang.transl('_抓取结果为零')
+    if (settings.autoMergeNovel && settings.skipNovelsInSeriesWhenAutoMerge) {
+      // 当用户启用了自动合并系列小说，并且处于系列小说页面里时，不需要显示提示，因为所有小说都被合并了
+      if (pageType.type === pageType.list.NovelSeries) {
+        return
+      }
+      msg +=
+        '<br>' + lang.transl('_抓取结果为零并且启用了自动合并系列小说时的提示')
+    }
     log.error(msg, 2)
     msgBox.error(msg)
   }

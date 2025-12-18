@@ -178,6 +178,11 @@ class Log {
       } else {
         span = this.refresh[refreshFlag]
       }
+      // 虽然刷新的日志不计入总数，但如果某个日志区域里的第一条日志就是刷新日志，那么此时必须把 count 加 1
+      // 否则会因为 count 为 0 而导致这个日志区域被判断为没有内容，从而不会显示
+      if (this.count === 0) {
+        this.count++
+      }
     } else {
       this.count++
 
@@ -479,7 +484,7 @@ class Log {
 
     Utils.downloadFile(url, fileName)
 
-    const msg = lang.transl('_导出日志成功')
+    const msg = '✅' + lang.transl('_导出日志成功')
     log.success(msg)
     toast.success(msg, {
       position: 'topCenter',

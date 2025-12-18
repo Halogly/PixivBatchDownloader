@@ -184,7 +184,7 @@ class DownloadControl {
 
       // 文件下载成功
       if (msg.msg === 'downloaded') {
-        URL.revokeObjectURL(msg.data.url)
+        URL.revokeObjectURL(msg.data.blobURLFront)
 
         // 发送下载成功的事件
         EVT.fire('downloadSuccess', msg.data)
@@ -372,10 +372,9 @@ class DownloadControl {
 
   // 抓取完毕之后，已经可以开始下载时，显示必要的信息，并决定是否立即开始下载
   private readyDownload() {
-    if (states.busy || states.mergeNovel) {
+    if (states.busy) {
       return
     }
-
     if (store.result.length === 0) {
       return progressBar.reset(0)
     }
@@ -458,6 +457,7 @@ class DownloadControl {
     }
 
     toast.show(lang.transl('_开始下载'))
+    // 这条日志前面不添加 emoji
     log.success(lang.transl('_正在下载中'))
 
     if (Config.mobile) {
@@ -480,7 +480,7 @@ class DownloadControl {
       // 如果正在下载中
       if (states.busy) {
         this.pause = true
-        log.warning(lang.transl('_已暂停'), 2)
+        log.warning('⏸️' + lang.transl('_已暂停'), 2)
 
         EVT.fire('downloadPause')
       } else {
@@ -497,7 +497,7 @@ class DownloadControl {
     }
 
     this.stop = true
-    log.error(lang.transl('_已停止'), 2)
+    log.error('🛑' + lang.transl('_已停止'), 2)
     this.pause = false
 
     EVT.fire('downloadStop')
@@ -519,8 +519,9 @@ class DownloadControl {
   private setDownloaded() {
     this.downloaded = downloadStates.downloadedCount()
 
+    // 显示下载进度
     const text = `${this.downloaded} / ${store.result.length}`
-    log.log(text, 2, false)
+    log.log('➡️' + text, 2, false)
 
     // 设置总下载进度条
     progressBar.setTotalProgress(this.downloaded)
@@ -529,7 +530,7 @@ class DownloadControl {
 
     // 所有文件正常下载完毕（跳过下载的文件也算正常下载）
     if (this.downloaded === store.result.length) {
-      log.success(lang.transl('_下载完毕'), 2)
+      log.success('✅' + lang.transl('_下载完毕'), 2)
       window.setTimeout(() => {
         // 延后触发下载完成的事件。因为下载完成事件是由上游事件（跳过下载，或下载成功事件）派生的，如果这里不延迟触发，可能导致其他模块先接收到下载完成事件，后接收到上游事件。
         EVT.fire('downloadComplete')

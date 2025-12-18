@@ -92,6 +92,7 @@ class InitFollowingPage extends InitPageBase {
       batchFollowUser.start()
     })
 
+    // 在红叶版本里启用此功能
     Tools.addBtn(
       'crawlBtns',
       Colors.bgWarning,
@@ -247,7 +248,7 @@ class InitFollowingPage extends InitPageBase {
     this.index++
 
     log.log(
-      `${lang.transl('_已抓取x个用户', this.index.toString())}, ${lang.transl(
+      `➡️${lang.transl('_已抓取x个用户', this.index.toString())}, ${lang.transl(
         '_当前作品个数',
         store.idList.length.toString()
       )}`,

@@ -3,6 +3,11 @@ import { EVT } from '../EVT'
 import { pageType } from '../PageType'
 import { settings } from './Settings'
 
+type NewOption = {
+  id: number
+  time: number
+}
+
 /**控制每个设置的隐藏和显示 */
 class Options {
   public init(allOption: NodeListOf<HTMLElement>) {
@@ -14,10 +19,50 @@ class Options {
 
   /**始终保持显示的选项 */
   private readonly whiteList: number[] = [
-    2, 4, 13, 17, 20, 32, 44, 50, 51, 57, 64,
+    2, 4, 13, 17, 20, 26, 32, 44, 50, 51, 57, 64,
   ]
 
-  private readonly newOptions: number[] = [14, 15, 20]
+  // 90 天内添加的设置项，显示 new 角标
+  private readonly now = Date.now()
+  private readonly newRange = 1000 * 60 * 60 * 24 * 90
+  private readonly newOptions: NewOption[] = [
+    {
+      // 复制按钮
+      id: 14,
+      // 2025-10-22
+      time: 1761091200000,
+    },
+    {
+      // 抓取每个用户最新的几个作品
+      id: 15,
+      // 2025-11-04
+      time: 1762214400000,
+    },
+    {
+      // 把文件保存到用户上次选择的位置
+      id: 20,
+      // 2025-11-04
+      time: 1762214400000,
+    },
+    {
+      // 自动合并系列小说
+      id: 73,
+      // 2025-11-17
+      time: 1763337600000,
+    },
+    {
+      // 合并系列小说时的命名规则
+      id: 91,
+      // 2025-11-24
+      time: 1763942400000,
+    },
+    {
+      // 过滤搜索页面的作品
+      id: 92,
+      // 2025-12-19
+      time: 1766102400000,
+    },
+  ]
 
   private bindEvents() {
     window.addEventListener(EVT.list.settingChange, (ev: CustomEventInit) => {
@@ -37,7 +82,7 @@ class Options {
   private display() {
     this.handleShowAdvancedSettings()
     this.alwaysHideSomeOption()
-    this.showNewFlag()
+    this.showNewIcon()
   }
 
   /**根据显示/隐藏高级设置来处理每个选项的显示与隐藏 */
@@ -66,7 +111,8 @@ class Options {
 
   /**总是隐藏某些设置 */
   private alwaysHideSomeOption() {
-    // this.hideOption([15, 79, 80])
+    // 在红叶版本里不隐藏这些设置
+    // this.hideOption([15, 79, 80, 92])
 
     // 某些设置在移动端不会生效，所以隐藏它们
     // 主要是和作品缩略图相关的一些设置、增强功能
@@ -80,17 +126,19 @@ class Options {
         0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 16, 18, 19, 21, 22,
         23, 24, 26, 27, 28, 30, 31, 33, 34, 35, 36, 37, 38, 39, 40, 42, 43, 44,
         46, 47, 48, 49, 50, 51, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65,
-        66, 67, 68, 69, 70, 71, 72, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84,
-        85, 86, 87, 88, 89,
+        66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83,
+        84, 85, 86, 87, 88, 89, 90, 91, 92,
       ])
     }
   }
 
   /**显示 new 角标 */
-  private showNewFlag() {
-    this.newOptions.forEach((no) => {
-      const el = this.getOption(no)
-      el.classList.add('new')
+  private showNewIcon() {
+    this.newOptions.forEach((option) => {
+      if (this.now - option.time <= this.newRange) {
+        const el = this.getOption(option.id)
+        el.classList.add('new')
+      }
     })
   }
 

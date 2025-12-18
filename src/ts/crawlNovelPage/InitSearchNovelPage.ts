@@ -20,6 +20,7 @@ import { setTimeoutWorker } from '../SetTimeoutWorker'
 import { vipSearchOptimize } from '../crawl/VipSearchOptimize'
 import { settings } from '../setting/Settings'
 import { pageType } from '../PageType'
+import '../filter/FilterSearchResults'
 
 class InitSearchNovelPage extends InitPageBase {
   constructor() {
@@ -238,7 +239,7 @@ class InitSearchNovelPage extends InitPageBase {
 
   private tipEmptyResult = Utils.debounce(() => {
     if (!settings.slowCrawl) {
-      log.error(lang.transl('_提示启用减慢抓取速度功能'))
+      log.log(lang.transl('_提示启用减慢抓取速度功能'))
     }
     log.error(lang.transl('_抓取被限制时返回空结果的提示'))
   }, 1000)
@@ -311,9 +312,9 @@ class InitSearchNovelPage extends InitPageBase {
     // 因为如果作品被过滤掉了，就不会储存在 store.idList 里
     if (this.listPageFinished > 0 && this.listPageFinished % 10 === 0) {
       if (data.data.length > 0) {
-        console.log(
-          `已抓取 ${this.listPageFinished} 页，检查最后一个作品的收藏数量`
-        )
+        // console.log(
+        //   `已抓取 ${this.listPageFinished} 页，检查最后一个作品的收藏数量`
+        // )
         const lastWork = data.data[data.data.length - 1]
         const check = await vipSearchOptimize.checkWork(lastWork.id, 'novels')
         if (check) {
@@ -325,11 +326,12 @@ class InitSearchNovelPage extends InitPageBase {
     }
 
     log.log(
-      lang.transl(
-        '_列表页抓取进度2',
-        this.listPageFinished.toString(),
-        this.needCrawlPageCount.toString()
-      ),
+      '➡️' +
+        lang.transl(
+          '_列表页抓取进度2',
+          this.listPageFinished.toString(),
+          this.needCrawlPageCount.toString()
+        ),
       1,
       false
     )

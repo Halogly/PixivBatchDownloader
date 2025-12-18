@@ -1,9 +1,7 @@
 import { Config } from '../Config'
 import { wiki } from './Wiki'
 
-// 设置项编号从 0 开始，现在最大是 90
-// 目前没有使用的编号: 73
-// 有些设置曾经使用过这些编号，但后来被移除了，所以这些编号就空缺了。在以后添加新设置时，可以考虑使用这些空缺的编号
+// 设置项编号从 0 开始，现在最大是 92
 export const formHtml = `
 <form class="settingForm">
   <div class="tabsContnet">
@@ -337,6 +335,8 @@ export const formHtml = `
         <option value="{page_tag}">{page_tag}</option>
         <option value="{type}">{type}</option>
         <option value="{AI}">{AI}</option>
+        <option value="{age}">{age}</option>
+        <option value="{age_r}">{age_r}</option>
         <option value="{like}">{like}</option>
         <option value="{bmk}">{bmk}</option>
         <option value="{bmk_1000}">{bmk_1000}</option>
@@ -357,7 +357,7 @@ export const formHtml = `
       <slot data-name="saveNamingRule"></slot>
       <button class="showFileNameTip textButton" id="showFileNameTip" type="button" data-xztext="_提示"></button>
     </p>
-    <p class="fileNameTip tip" id="fileNameTip">
+    <p class="fileNameTip tip namingTipArea" id="fileNameTip">
       <span data-xztext="_设置文件夹名的提示"></span>
       <span>{user}<span class="key">/</span>{id}</span>
       <br>
@@ -365,85 +365,93 @@ export const formHtml = `
       <br>
       * <span data-xztext="_有些标记并不总是可用的提醒"></span>
       <br>
-      <span class="blue">{id}</span>
+      <span data-xztext="_提示点击下方的标记就可以把它复制到剪贴板"></span>
+      <br>
+      <span class="blue name">{id}</span>
       <span data-xztext="_命名标记id"></span>
       <br>
-      <span class="blue">{user}</span>
+      <span class="blue name">{user}</span>
       <span data-xztext="_命名标记user"></span>
       <br>
-      <span class="blue">{user_id}</span>
+      <span class="blue name">{user_id}</span>
       <span data-xztext="_用户id"></span>
       <br>
-      <span class="blue">{title}</span>
+      <span class="blue name">{title}</span>
       <span data-xztext="_命名标记title"></span>
       <br>
-      <span class="blue">{tags}</span>
+      <span class="blue name">{tags}</span>
       <span data-xztext="_命名标记tags"></span>
       <br>
-      <span class="blue">{tags_translate}</span>
+      <span class="blue name">{tags_translate}</span>
       <span data-xztext="_命名标记tags_trans"></span>
       <br>
-      <span class="blue">{tags_transl_only}</span>
+      <span class="blue name">{tags_transl_only}</span>
       <span data-xztext="_命名标记tags_transl_only"></span>
       <br>
-      <span class="blue">{page_title}</span>
+      <span class="blue name">{page_title}</span>
       <span data-xztext="_文件夹标记PTitle"></span>
       <br>
-      * <span class="blue">{page_tag}</span>
+      * <span class="blue name">{page_tag}</span>
       <span data-xztext="_文件夹标记PTag"></span>
       <br>
-      <span class="blue">{type}</span>
+      <span class="blue name">{type}</span>
       <span data-xztext="_命名标记type"></span>
       <br>
-      * <span class="blue">{AI}</span>
+      * <span class="blue name">{AI}</span>
       <span data-xztext="_命名标记AI"></span>
       <br>
-      <span class="blue">{like}</span>
+      <span class="blue name">{age}</span>
+      <span data-xztext="_命名标记age"></span>
+      <br>
+      * <span class="blue name">{age_r}</span>
+      <span data-xztext="_命名标记age_r"></span>
+      <br>
+      <span class="blue name">{like}</span>
       <span data-xztext="_命名标记like"></span>
       <br>
-      <span class="blue">{bmk}</span>
+      <span class="blue name">{bmk}</span>
       <span data-xztext="_命名标记bmk"></span>
       <br>
-      <span class="blue">{bmk_1000}</span>
+      <span class="blue name">{bmk_1000}</span>
       <span data-xztext="_命名标记bmk_1000"></span>
       <br>
-      <span class="blue">{bmk_id}</span>
+      <span class="blue name">{bmk_id}</span>
       <span data-xztext="_命名标记bmk_id"></span>
       <br>
-      <span class="blue">{view}</span>
+      <span class="blue name">{view}</span>
       <span data-xztext="_命名标记view"></span>
       <br>
-      * <span class="blue">{rank}</span>
+      * <span class="blue name">{rank}</span>
       <span data-xztext="_命名标记rank"></span>
       <br>
-      <span class="blue">{date}</span>
+      <span class="blue name">{date}</span>
       <span data-xztext="_命名标记date"></span>
       <br>
-      <span class="blue">{upload_date}</span>
+      <span class="blue name">{upload_date}</span>
       <span data-xztext="_命名标记upload_date"></span>
       <br>
-      <span class="blue">{task_date}</span>
+      <span class="blue name">{task_date}</span>
       <span data-xztext="_命名标记taskDate"></span>
       <br>
-      <span class="blue">{px}</span>
+      <span class="blue name">{px}</span>
       <span data-xztext="_命名标记px"></span>
       <br>
-      * <span class="blue">{series_title}</span>
+      * <span class="blue name">{series_title}</span>
       <span data-xztext="_命名标记seriesTitle"></span>
       <span data-xztext="_当作品属于一个系列时可用"></span>
       <br>
-      * <span class="blue">{series_order}</span>
+      * <span class="blue name">{series_order}</span>
       <span data-xztext="_命名标记seriesOrder"></span>
       <span data-xztext="_当作品属于一个系列时可用"></span>
       <br>
-      * <span class="blue">{series_id}</span>
+      * <span class="blue name">{series_id}</span>
       <span data-xztext="_命名标记seriesId"></span>
       <span data-xztext="_当作品属于一个系列时可用"></span>
       <br>
-      <span class="blue">{id_num}</span>
+      <span class="blue name">{id_num}</span>
       <span data-xztext="_命名标记id_num"></span>
       <br>
-      <span class="blue">{p_num}</span>
+      * <span class="blue name">{p_num}</span>
       <span data-xztext="_命名标记p_num"></span>
     </p>
     <p class="option" data-no="50">
@@ -466,6 +474,7 @@ export const formHtml = `
       <span class="subOptionWrap" data-show="r18Folder">
         <span data-xztext="_目录名"></span>
         <input type="text" name="r18FolderName" class="setinput_style1 blue" style="width:150px;min-width: 150px;" value="[R-18&R-18G]">
+        <button type="button" class="gray1 textButton" id="showR18FolderNameTip" data-xztext="_提示"></button>
       </span>
     </p>
     <p class="option" data-no="16">
@@ -786,7 +795,7 @@ export const formHtml = `
       <input type="radio" name="ugoiraSaveAs" id="ugoiraSaveAs3" class="need_beautify radio" value="gif">
       <span class="beautify_radio" tabindex="0"></span>
       <label for="ugoiraSaveAs3" data-xztext="_gif"></label>
-      <input type="radio" name="ugoiraSaveAs" id="ugoiraSaveAs4" class="need_beautify radio" value="png">
+      <input type="radio" name="ugoiraSaveAs" id="ugoiraSaveAs4" class="need_beautify radio" value="apng">
       <span class="beautify_radio" tabindex="0"></span>
       <label for="ugoiraSaveAs4" class="has_tip" data-xztip="_无损" data-xztext="_apng"></label>
       <input type="radio" name="ugoiraSaveAs" id="ugoiraSaveAs2" class="need_beautify radio" value="zip">
@@ -811,6 +820,94 @@ export const formHtml = `
       <input type="radio" name="novelSaveAs" id="novelSaveAs2" class="need_beautify radio" value="epub">
       <span class="beautify_radio" tabindex="0"></span>
       <label for="novelSaveAs2"> EPUB </label>
+    </p>
+    <p class="option" data-no="73">
+      <a href="${wiki.link(73)}" target="_blank" class="has_tip settingNameStyle" data-xztip="_自动合并系列小说的说明">
+        <span data-xztext="_自动合并系列小说"></span>
+        <span class="gray1"> ? </span>
+      </a>
+      <input type="checkbox" name="autoMergeNovel" class="need_beautify checkbox_switch">
+      <span class="beautify_switch" tabindex="0"></span>
+      <span class="subOptionWrap" data-show="autoMergeNovel">
+        <label for="skipNovelsInSeriesWhenAutoMerge" data-xztext="_不再单独下载系列里的小说" class="has_tip" data-xztip="_不再单独下载系列里的小说的说明"></label>
+        <span class="gray1"> ? &nbsp;</span>
+        <input type="checkbox" name="skipNovelsInSeriesWhenAutoMerge" id="skipNovelsInSeriesWhenAutoMerge" class="need_beautify checkbox_switch" checked>
+        <span class="beautify_switch" tabindex="0"></span>
+      </span>
+    </p>
+    <p class="option" data-no="91">
+      <a href="${wiki.link(91)}" target="_blank" class="settingNameStyle" data-xztext="_合并系列小说时的命名规则"></a>
+      <span class="rowWrap">
+        <textarea class="centerPanelTextArea beautify_scrollbar" name="seriesNovelNameRule" rows="1"></textarea>
+        <button class="showFileNameTip textButton" id="showSeriesNovelNameTip" type="button" data-xztext="_提示"></button>
+      </span>
+    </p>
+    <p class="fileNameTip tip namingTipArea" id="seriesNovelNameTip">
+      <span data-xztext="_系列小说的命名标记提醒"></span>
+      <br>
+      * <span data-xztext="_有些标记并不总是可用的提醒"></span>
+      <br>
+      <span data-xztext="_提示点击下方的标记就可以把它复制到剪贴板"></span>
+      <br>
+      <span class="blue name">{series_title}</span>
+      <span data-xztext="_系列小说的命名标记_series_title"></span>
+      <br>
+      <span class="blue name">{series_id}</span>
+      <span data-xztext="_系列小说的命名标记_series_id"></span>
+      <br>
+      <span class="blue name">{user}</span>
+      <span data-xztext="_系列小说的命名标记_user"></span>
+      <br>
+      <span class="blue name">{user_id}</span>
+      <span data-xztext="_系列小说的命名标记_user_id"></span>
+      <br>
+      * <span class="blue name">{part}</span>
+      <span data-xztext="_系列小说的命名标记_part"></span>
+      <br>
+      <span class="blue name">{ext}</span>
+      <span data-xztext="_系列小说的命名标记_ext"></span>
+      <br>
+      <span class="blue name">{age}</span>
+      <span data-xztext="_系列小说的命名标记_age"></span>
+      <br>
+      * <span class="blue name">{age_r}</span>
+      <span data-xztext="_系列小说的命名标记_age_r"></span>
+      <br>
+      * <span class="blue name">{AI}</span>
+      <span data-xztext="_系列小说的命名标记_AI"></span>
+      <br>
+      <span class="blue name">{lang}</span>
+      <span data-xztext="_系列小说的命名标记_lang"></span>
+      <br>
+      <span class="blue name">{total}</span>
+      <span data-xztext="_系列小说的命名标记_total"></span>
+      <br>
+      <span class="blue name">{char_count}</span>
+      <span data-xztext="_系列小说的命名标记_char_count"></span>
+      <br>
+      <span class="blue name">{create_date}</span>
+      <span data-xztext="_系列小说的命名标记_create_date"></span>
+      <br>
+      <span class="blue name">{last_date}</span>
+      <span data-xztext="_系列小说的命名标记_last_date"></span>
+      <br>
+      <span class="blue name">{task_date}</span>
+      <span data-xztext="_系列小说的命名标记_task_date"></span>
+      <br>
+      <span class="blue name">{first_id}</span>
+      <span data-xztext="_系列小说的命名标记_first_id"></span>
+      <br>
+      <span class="blue name">{latest_id}</span>
+      <span data-xztext="_系列小说的命名标记_latest_id"></span>
+      <br>
+      <span class="blue name">{tags}</span>
+      <span data-xztext="_系列小说的命名标记_tags"></span>
+      <br>
+      * <span class="blue name">{page_tag}</span>
+      <span data-xztext="_文件夹标记PTag"></span>
+      <br>
+      <span class="blue name">{page_title}</span>
+      <span data-xztext="_系列小说的命名标记_page_title"></span>
     </p>
     <p class="option" data-no="27">
       <a href="${wiki.link(27)}" target="_blank" class="has_tip settingNameStyle" data-xztip="_在小说里保存元数据提示">
@@ -1099,13 +1196,13 @@ export const formHtml = `
       <input type="text" name="copyWorkInfoFormat" class="setinput_style1 blue" style="width:100%;max-width:350px;" value="id: {id}{n}title: {title}{n}tags: {tags}{n}url: {url}{n}user: {user}">
       <button type="button" class="gray1 textButton" id="showCopyWorkInfoFormatTip" data-xztext="_提示"></button>
     </p>
-    <p class="tip" id="copyWorkInfoFormatTip">
+    <p class="tip namingTipArea" id="copyWorkInfoFormatTip">
       <span data-xztext="_复制内容的格式的提示"></span>
       <br>
-      <span class="blue">{url}</span>
+      <span class="blue name">{url}</span>
       <span data-xztext="_url标记的说明"></span>
       <br>
-      <span class="blue">{n}</span>
+      <span class="blue name">{n}</span>
       <span data-xztext="_换行标记的说明"></span>
       <br>
     </p>
@@ -1137,6 +1234,14 @@ export const formHtml = `
       </a>
       <input type="checkbox" name="showFastSearchArea" class="need_beautify checkbox_switch" checked>
       <span class="beautify_switch" tabindex="0"></span>
+    </p>
+    <p class="option" data-no="92">
+      <a href="${wiki.link(92)}" target="_blank" class="settingNameStyle">
+        <span data-xztext="_过滤搜索页面的作品"></span>
+      </a>
+      <input type="checkbox" name="filterSearchResults" class="need_beautify checkbox_switch">
+      <span class="beautify_switch" tabindex="0"></span>
+      <button type="button" class="gray1 textButton" id="showFilterSearchResultsTip" data-xztext="_帮助"></button>
     </p>
     <p class="option" data-no="88">
       <a href="${wiki.link(88)}" target="_blank" class="has_tip settingNameStyle" data-xztip="_在搜索页面里移除已关注用户的作品的说明">

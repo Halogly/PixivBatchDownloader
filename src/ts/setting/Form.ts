@@ -11,6 +11,7 @@ import { settings, setSetting, SettingKeys } from '../setting/Settings'
 import { options } from '../setting/Options'
 import { msgBox } from '../MsgBox'
 import { DateFormat } from '../utils/DateFormat'
+import { toast } from '../Toast'
 
 // 设置表单
 class Form {
@@ -35,8 +36,8 @@ class Form {
   private bindEvents() {
     this.bindBeautifyInput()
     this.bindFunctionBtn()
-    this.showToggleTip()
-    this.showMsgTip()
+    this.toggleHelpArea()
+    this.showMsgWhenClick()
 
     // 输入框获得焦点时自动选择文本（命名规则的输入框例外）
     const centerInputs: NodeListOf<HTMLInputElement> =
@@ -149,7 +150,16 @@ class Form {
   }
 
   /**点击一些按钮时，切换显示对应的帮助区域 */
-  private showToggleTip() {
+  private toggleHelpArea() {
+    // 显示系列小说的命名规则的提示
+    this.form
+      .querySelector('#showSeriesNovelNameTip')!
+      .addEventListener('click', () =>
+        Utils.toggleEl(
+          document.querySelector('#seriesNovelNameTip')! as HTMLElement
+        )
+      )
+
     // 显示命名字段提示
     this.form
       .querySelector('#showFileNameTip')!
@@ -202,7 +212,28 @@ class Form {
   }
 
   /**点击一些按钮时，通过 msgBox 显示帮助 */
-  private showMsgTip() {
+  private showMsgWhenClick() {
+    // 过滤搜索页面的作品的说明
+    this.form
+      .querySelector('#showFilterSearchResultsTip')!
+      .addEventListener('click', () => {
+        msgBox.show(lang.transl('_过滤搜索页面的作品的说明'), {
+          title: lang.transl('_过滤搜索页面的作品'),
+        })
+      })
+
+    // 显示“把 R-18(G) 作品存入指定的文件夹里”可以用命名标记代替的说明
+    this.form
+      .querySelector('#showR18FolderNameTip')!
+      .addEventListener('click', () => {
+        msgBox.show(
+          lang.transl('_把r18作品存入指定的文件夹里可以使用命名标记替代的说明'),
+          {
+            title: lang.transl('_把r18作品存入指定的文件夹里'),
+          }
+        )
+      })
+
     // 把文件保存到用户上次选择的位置的说明
     this.form
       .querySelector('#showRememberTheLastSaveLocationTip')!
@@ -263,6 +294,22 @@ class Form {
 
   /**绑定功能按钮，点击按钮后会执行特定操作 */
   private bindFunctionBtn() {
+    // 点击命名规则帮助区域里的标记名字时，复制到剪贴板
+    const allName = document.querySelectorAll('.namingTipArea .name')
+    allName.forEach((el) => {
+      el.addEventListener('click', async () => {
+        const text = el.textContent
+        if (text) {
+          const copied = await Utils.writeClipboardText(text)
+          if (copied) {
+            toast.success(lang.transl('_已复制'))
+          } else {
+            toast.error(lang.transl('_复制失败'))
+          }
+        }
+      })
+    })
+
     // 投稿时间的输入框后面有 now 按钮，点击之后会把对应的输入框的值设置为现在
     const setNowBtns = this.form.querySelectorAll(
       'button[role="setDate"]'

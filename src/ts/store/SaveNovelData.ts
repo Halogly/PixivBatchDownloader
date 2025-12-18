@@ -54,7 +54,6 @@ class SaveNovelData {
       const seriesOrder = body.seriesNavData ? body.seriesNavData.order : null
 
       // 保存小说的一些元数据
-      let meta = ''
       let metaArr: string[] = []
 
       const pageUrl = `https://www.pixiv.net/novel/show.php?id=${id}`
@@ -67,33 +66,14 @@ class SaveNovelData {
       // metaDescription 保存在 novelMeta.description 和 novelMeta.meta 里
       // 它会在生成的小说里显示，供读者阅读，所以移除了 html 标签，只保留纯文本
       // 处理后，换行标记是 \n 而不是 <br/>
-      const metaDescription = Tools.replaceEPUBDescription(
+      const descriptionNoHtmlTag = Tools.replaceEPUBDescription(
         Utils.htmlToText(description)
       )
-      const date = DateFormat.format(body.createDate, settings.dateFormat)
-      metaArr.push(
-        title,
-        user,
-        pageUrl,
-        date,
-        metaDescription,
-        tagsA.join('\n')
-      )
-      meta = metaArr.join('\n\n') + '\n\n\n'
 
       // 提取嵌入的图片资源
-      let embeddedImages: null | {
-        [key: string]: string
-      } = null
-      if (body.textEmbeddedImages) {
-        embeddedImages = {}
-        for (const [id, value] of Object.entries(body.textEmbeddedImages)) {
-          embeddedImages[id] = value.urls.original
-        }
-      }
+      const embeddedImages = Tools.extractEmbeddedImages(data)
 
       // 保存作品信息
-
       store.addResult({
         aiType: body.aiType,
         id: id,
@@ -124,73 +104,18 @@ class SaveNovelData {
         novelMeta: {
           id: body.id,
           title: title,
-          content: this.replaceFlag(body.content),
-          description: metaDescription,
+          content: Tools.replaceNovelContentFlag(body.content),
+          description: descriptionNoHtmlTag,
           coverUrl: body.coverUrl,
           createDate: body.createDate,
+          uploadDate: body.uploadDate,
           userName: body.userName,
           embeddedImages: embeddedImages,
-          meta: meta,
           tags: tags,
         },
         xRestrict: body.xRestrict,
       })
     }
-  }
-
-  // '[[jumpuri:予約ページ>https://www.amazon.co.jp/dp/4758092486]]'
-  // 替换成
-  // '予約ページ（https://www.amazon.co.jp/dp/4758092486）'
-  private replaceJumpuri(str: string) {
-    let reg = /\[\[jumpuri:(.*?)>(.*?)\]\]/g
-    let temp
-    while ((temp = reg.exec(str))) {
-      str = str.replace(temp[0], `${temp[1].trim()}（${temp[2].trim()}）`)
-      reg.lastIndex = 0
-    }
-
-    return str
-  }
-
-  // > '[[rb:莉莉丝 > Lilith]]'
-  // 替换成
-  // '莉莉丝（Lilith）'
-  private replaceRb(str: string) {
-    let reg = /\[\[rb:(.*?)>(.*?)\]\]/g
-    let temp
-    while ((temp = reg.exec(str))) {
-      str = str.replace(temp[0], `${temp[1].trim()}（${temp[2].trim()}）`)
-      reg.lastIndex = 0
-    }
-    return str
-  }
-
-  // > '[chapter:标题]'
-  // 替换成
-  // '标题'
-  private replaceChapter(str: string) {
-    const reg = /\[chapter:(.*?)\]/g
-    let temp
-    while ((temp = reg.exec(str))) {
-      str = str.replace(temp[0], temp[1])
-      reg.lastIndex = 0
-    }
-    return str
-  }
-
-  // 对小说里的一些标记进行替换
-  private replaceFlag(str: string) {
-    str = str.replace(/\[newpage\]/g, '')
-
-    str = this.replaceJumpuri(str)
-
-    str = str.replace(/\[jump:.*?\]/g, '')
-
-    str = this.replaceRb(str)
-
-    str = this.replaceChapter(str)
-
-    return str
   }
 }
 

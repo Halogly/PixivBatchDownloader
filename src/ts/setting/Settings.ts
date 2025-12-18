@@ -105,7 +105,7 @@ interface XzSetting {
   downBlackWhiteImg: boolean
   downNotBookmarked: boolean
   downBookmarked: boolean
-  ugoiraSaveAs: 'webm' | 'gif' | 'zip' | 'png'
+  ugoiraSaveAs: 'webm' | 'gif' | 'zip' | 'apng'
   convertUgoiraThread: number
   needTagSwitch: boolean
   notNeedTagSwitch: boolean
@@ -154,6 +154,7 @@ interface XzSetting {
   fileNameLengthLimitSwitch: boolean
   tagsSeparator: ',' | '#' | '^' | '&' | '_'
   fileNameLengthLimit: number
+  /** 图片尺寸。original 原图, regular 普通, small 小图, thumb 方形缩略图 */
   imageSize: 'original' | 'regular' | 'small' | 'thumb'
   dateFormat: string
   userSetLang: 'zh-cn' | 'zh-tw' | 'ja' | 'en' | 'ko' | 'ru' | 'auto'
@@ -307,6 +308,11 @@ interface XzSetting {
   crawlLatestFewWorks: boolean
   crawlLatestFewWorksNumber: number
   rememberTheLastSaveLocation: boolean
+  autoMergeNovel: boolean
+  /** 自动合并系列小说时，如果一篇小说属于某个系列，则不下载它（因为合并后的小说里会包含这篇小说，所以没必要重复下载） */
+  skipNovelsInSeriesWhenAutoMerge: boolean
+  seriesNovelNameRule: string
+  filterSearchResults: boolean
 }
 
 type SettingKeys = keyof XzSetting
@@ -583,7 +589,7 @@ class Settings {
     sizeMin: 0,
     sizeMax: 100,
     novelSaveAs: 'txt',
-    saveNovelMeta: false,
+    saveNovelMeta: true,
     deduplication: false,
     dupliStrategy: 'loose',
     fileNameLengthLimitSwitch: false,
@@ -746,6 +752,11 @@ class Settings {
     crawlLatestFewWorks: false,
     crawlLatestFewWorksNumber: 10,
     rememberTheLastSaveLocation: false,
+    autoMergeNovel: false,
+    skipNovelsInSeriesWhenAutoMerge: true,
+    seriesNovelNameRule:
+      'novel series/{page_tag}/{series_title}-{series_id}-{user}-{part}-{tags}.{ext}',
+    filterSearchResults: true,
   }
 
   private allSettingKeys = Object.keys(this.defaultSettings)
@@ -903,7 +914,7 @@ class Settings {
     this.setSetting('tipOpenWikiLink', true)
     this.setSetting('tipCopyWorkInfoButton', true)
 
-    toast.success('✓ ' + lang.transl('_重新显示帮助'))
+    toast.success(lang.transl('_重新显示帮助'))
   }
 
   // 重置设置 或者 导入设置

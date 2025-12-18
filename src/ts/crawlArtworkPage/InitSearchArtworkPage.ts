@@ -26,6 +26,7 @@ import { downloadOnClickBookmark } from '../download/DownloadOnClickBookmark'
 import { setTimeoutWorker } from '../SetTimeoutWorker'
 import '../pageFunciton/RemoveWorksOfFollowedUsersOnSearchPage'
 import { vipSearchOptimize } from '../crawl/VipSearchOptimize'
+import '../filter/FilterSearchResults'
 
 type AddBMKData = {
   id: number
@@ -367,7 +368,7 @@ class InitSearchArtworkPage extends InitPageBase {
   private tipEmptyResult = Utils.debounce(() => {
     log.error(lang.transl('_抓取被限制时返回空结果的提示'))
     if (!settings.slowCrawl) {
-      log.error(lang.transl('_提示启用减慢抓取速度功能'))
+      log.log(lang.transl('_提示启用减慢抓取速度功能'))
     }
   }, 1000)
 
@@ -448,9 +449,9 @@ class InitSearchArtworkPage extends InitPageBase {
     // 因为如果作品被过滤掉了，就不会储存在 store.idList 里
     if (this.listPageFinished > 0 && this.listPageFinished % 10 === 0) {
       if (data.data.length > 0) {
-        console.log(
-          `已抓取 ${this.listPageFinished} 页，检查最后一个作品的收藏数量`
-        )
+        // console.log(
+        //   `已抓取 ${this.listPageFinished} 页，检查最后一个作品的收藏数量`
+        // )
         const lastWork = data.data[data.data.length - 1]
         const check = await vipSearchOptimize.checkWork(lastWork.id, 'illusts')
         if (check) {
@@ -462,11 +463,12 @@ class InitSearchArtworkPage extends InitPageBase {
     }
 
     log.log(
-      lang.transl(
-        '_列表页抓取进度2',
-        this.listPageFinished.toString(),
-        this.needCrawlPageCount.toString()
-      ),
+      '➡️' +
+        lang.transl(
+          '_列表页抓取进度2',
+          this.listPageFinished.toString(),
+          this.needCrawlPageCount.toString()
+        ),
       1,
       false
     )
@@ -905,13 +907,6 @@ class InitSearchArtworkPage extends InitPageBase {
           })
           data.el.classList.add(this.bookmarkedClass)
         }
-
-        if (status === 403) {
-          toast.error(
-            `403 Forbidden, ${lang.transl('_你的账号已经被Pixiv限制')}`
-          )
-        }
-
         break
       }
     }

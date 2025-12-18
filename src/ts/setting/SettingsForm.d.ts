@@ -163,4 +163,8 @@ export interface SettingsForm extends HTMLFormElement {
   crawlLatestFewWorks: HTMLInputElement
   crawlLatestFewWorksNumber: HTMLInputElement
   rememberTheLastSaveLocation: HTMLInputElement
+  autoMergeNovel: HTMLInputElement
+  skipNovelsInSeriesWhenAutoMerge: HTMLInputElement
+  seriesNovelNameRule: HTMLInputElement
+  filterSearchResults: HTMLInputElement
 }

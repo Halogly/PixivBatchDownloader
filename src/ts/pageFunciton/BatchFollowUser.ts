@@ -33,7 +33,7 @@ class BatchFollowUser {
     }
 
     if (store.loggedUserID === '') {
-      return msgBox.error(lang.transl('_请您登录Pixiv账号然后重试_401'))
+      return msgBox.error(lang.transl('_状态码401的提示'))
     }
 
     this.busy = true
@@ -243,8 +243,9 @@ class BatchFollowUser {
       }
 
       this.logProgress(number, total, this.sendReqNumber)
-      log.success('✓ ' + taskName)
-      msgBox.success('✓ ' + taskName)
+      const msg = '✅' + taskName
+      log.success(msg)
+      msgBox.success(msg)
       return resolve()
     })
   }
